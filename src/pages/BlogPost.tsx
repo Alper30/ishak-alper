@@ -9,7 +9,6 @@ import { ArrowLeft, Calendar, Tag as TagIcon, Heart, MessageCircle, Send, X, Boo
 import { staticBlogPosts, BlogPost as BlogPostType } from '../data/blogPosts';
 import { samplePosts } from '../lib/seed'; // Add this import
 import { handleFirestoreError, OperationType } from '../lib/errorHandling';
-import BackButton from '../components/BackButton';
 import VideoPlayer from '../components/VideoPlayer';
 import SEO from '../components/SEO';
 import { useTranslation } from 'react-i18next';
@@ -312,7 +311,6 @@ export default function BlogPost() {
         url={`https://ishakalper.com/blog/${post.id}`}
         type="article"
       />
-      <BackButton />
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

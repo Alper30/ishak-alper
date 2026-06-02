@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import ContentFeed from '../components/ContentFeed';
-import BackButton from '../components/BackButton';
 import { handleFirestoreError, OperationType } from '../lib/errorHandling';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
@@ -41,7 +40,6 @@ export default function Blog() {
         description="Karanlık psikoloji, insan davranışları ve derin zihinsel yapılar üzerine yazılar ve güncel makaleler."
         url="https://ishakalper.com/blog"
       />
-      <BackButton />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="mb-12 border-b border-white/10 pb-8 text-center max-w-3xl mx-auto">
           <h1 id="blog-title" className="text-4xl md:text-5xl font-serif font-medium tracking-tight text-white mb-4">

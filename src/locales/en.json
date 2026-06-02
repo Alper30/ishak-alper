@@ -31,7 +31,7 @@
     "thoughtsAndAnalysis": "Thoughts & Analysis",
     "thoughtsSubtitle": "Short notes and in-depth analysis on human behavior, relationships, and the unseen sides of life.",
     "heroTitle": "Glasses That Show You Naked",
-    "heroSubtitle": "Are you ready to drop the masks around you and face your shattering reality? Leave aside the sugar-coated lies you've been sold for years. This book is a manifesto of psychological awakening that will fundamentally change your relationships, your mental boundaries, and the way you perceive life."
+    "heroSubtitle": "Sleep with sweet lies, or wake up to shattering truths? A profound masterpiece that tears down social masks and deciphers hidden intentions and human nature in all its 'nakedness'. To see the unseen and take control of your life; it's time to put on the glasses."
   },
   "about": {
     "subtitle": "Author, Influencer & Consultant",
@@ -224,6 +224,10 @@
       "vip": {
         "title": "VIP Transformation & Strategic Life Design",
         "desc": "One-on-one, intensive mentoring program. A complete transformation in every aspect of your life."
+      },
+      "socialMedia": {
+        "title": "Social Media Growth Consulting",
+        "desc": "Organic growth strategy for Instagram, YouTube, TikTok, and X. Algorithm optimization, content psychology, and audience management."
       }
     }
   },

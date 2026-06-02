@@ -31,7 +31,7 @@
     "thoughtsAndAnalysis": "Düşünceler & Analizler",
     "thoughtsSubtitle": "İnsan davranışları, ilişkiler ve hayatın görünmeyen tarafları üzerine kısa notlar ve derinlemesine analizler.",
     "heroTitle": "Çıplak Gösteren Gözlükler",
-    "heroSubtitle": "Etrafındaki maskeleri düşürmeye ve sarsıcı gerçekliğinle yüzleşmeye hazır mısın? Yıllarca sana satılan süslü yalanları bir kenara bırak. Bu eser, ilişkilerini, zihinsel sınırlarını ve hayatı algılayış biçimini kökünden değiştirecek bir psikolojik uyanış manifestosu."
+    "heroSubtitle": "Tatlı yalanlarla uyumak mı, sarsıcı gerçeklere uyanmak mı? Sosyal maskeleri yıkan, ilişkilerdeki gizli niyetleri ve insan doğasını tüm 'çıplaklığıyla' deşifre eden sarsıcı bir başucu eseri. Görünmeyeni görmek ve hayatın kontrolünü eline almak için; gözlükleri takma zamanı."
   },
   "about": {
     "subtitle": "Yazar, Influencer & Danışman",
@@ -229,6 +229,10 @@
       "vip": {
         "title": "VIP Dönüşüm & Stratejik Yaşam Tasarımı",
         "desc": "Birebir, yoğunlaştırılmış mentorluk programı. Hayatınızın her alanında tam bir dönüşüm."
+      },
+      "socialMedia": {
+        "title": "Sosyal Medya Büyüme & Strateji",
+        "desc": "Instagram, YouTube, TikTok ve X platformlarında organik büyüme stratejisi. Kitle psikolojisi ve profesyonel marka konumlandırma."
       }
     }
   },

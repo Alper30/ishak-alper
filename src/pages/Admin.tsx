@@ -138,7 +138,8 @@ export default function Admin({ user }: AdminProps) {
     totalOrders: 0,
     totalSubscribers: 0,
     totalMessages: 0,
-    totalConsultingRequests: 0
+    totalConsultingRequests: 0,
+    totalVisitors: 0
   });
 
   // Books State
@@ -150,7 +151,7 @@ export default function Admin({ user }: AdminProps) {
   const [settings, setSettings] = useState({
     profilePictureUrl: 'https://ui-avatars.com/api/?name=Ishak+Alper&background=27272a&color=ECCC7B&size=512',
     heroTitle: 'Çıplak Gösteren Gözlükler',
-    heroSubtitle: 'Etrafındaki maskeleri düşürmeye ve sarsıcı gerçekliğinle yüzleşmeye hazır mısın? Yıllarca sana satılan süslü yalanları bir kenara bırak. Bu eser, ilişkilerini, zihinsel sınırlarını ve hayatı algılayış biçimini kökünden değiştirecek bir psikolojik uyanış manifestosu.',
+    heroSubtitle: 'Tatlı yalanlarla uyumak mı, sarsıcı gerçeklere uyanmak mı? Sosyal maskeleri yıkan, ilişkilerdeki gizli niyetleri ve insan doğasını tüm \'çıplaklığıyla\' deşifre eden sarsıcı bir başucu eseri. Görünmeyeni görmek ve hayatın kontrolünü eline almak için; gözlükleri takma zamanı.',
     instagramUrl: '#',
     twitterUrl: '#',
     linkedinUrl: '#',
@@ -185,7 +186,9 @@ export default function Admin({ user }: AdminProps) {
       { title: "Maskesiz Yaşamak", desc: "Ruhsal ve finansal zenginlik.", url: "https://www.youtube.com/watch?v=LXb3EKWsInQ", poster: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=800&auto=format&fit=crop" }
     ],
     seoKeywords: "İshak Alper, Çıplak Gösteren Gözlükler, kişisel gelişim kitabı, psikoloji danışmanlık, karanlık psikoloji",
-    seoDescription: "İshak Alper - Çıplak Gösteren Gözlükler kitabının yazarı. Karanlık psikoloji ve davranış bilimleri danışmanlık hizmetleri."
+    seoDescription: "İshak Alper - Çıplak Gösteren Gözlükler kitabının yazarı. Karanlık psikoloji ve davranış bilimleri danışmanlık hizmetleri.",
+    googleAnalyticsId: '',
+    metaPixelId: ''
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -211,7 +214,22 @@ export default function Admin({ user }: AdminProps) {
         const docRef = doc(db, 'settings', 'general');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setSettings(prev => ({ ...prev, ...docSnap.data() }));
+          const data = docSnap.data();
+          const knownOldSubtitles = [
+            'Rahatlatıcı yalanları mı tercih edersin, yoksa can yakan ama seni özgürleştirecek gerçeği mi? Kendi karanlığınla yüzleşip düşünce netliği kazanman için bir başucu kitabı ve psikolojik rehberlik.',
+            'İnsanları, ilişkileri ve hayatın görünmeyen taraflarını anlamak isteyenler için.',
+            'Rahatlatıcı yalanları mı tercih edersin, yoksa can yakan ama seni özgürleştirecek gerçeği mi? Bu kitap, yüzleşmekten kaçtığın her şeyi sana gösterecek.',
+            'Etrafındaki maskeleri düşürmeye ve sarsıcı gerçekliğinle yüzleşmeye hazır mısın? Yıllarca sana satılan süslü yalanları bir kenara bırak. Bu eser, ilişkilerini, zihinsel sınırlarını ve hayatı algılayış biçimini kökünden değiştirecek bir psikolojik uyanış manifestosu.',
+            'Herkesin sahte maskelerle dolaştığı bir dünyada, gerçeği görmek mi istersin, yoksa rahatlatıcı yalanlarla uyumaya devam etmek mi? Bu kitap, sana duymak istediklerini değil, yüzleşmekten kaçtığın \'çıplak\' gerçekleri sunuyor. İlişkilerini rehin alan gizli niyetleri, zihnindeki görünmez prangaları ve hayatın süslenmemiş halini kendi gözlerinle görmeye hazırlan. Seçim senin: Gözlükleri tak ve illüzyonu parçala!',
+            'Gerçeğe tahammül edemeyenler için yazılmadı. Hayatın boyunca sana dayatılan \'rahatlatıcı yalanları\' bir kenara bırak. Bu eser; güvendiğin ilişkilerdeki gizli niyetleri, zihnindeki görünmez prangaları ve sana oynanan manipülasyonları deşifre eden bir kırmızı haptır. Acıtan ama seni sonsuza dek özgür kılacak \'çıplak\' gerçeği görmeye hazır mısın? Seçim senin: Ya uykuna geri dön, ya da gözlükleri tak ve illüzyonu parçala!',
+            'Neden \'çıplak\'? Çünkü insan doğasının üzerindeki tüm o nezaket maskelerini, sosyal rolleri ve sahte savunma mekanizmalarını soyduğumuzda geriye sadece yüzleşilmesi zor, yalın bir gerçek kalır. \'Çıplak Gösteren Gözlükler\'; ilişkilerde, toplumsal kabullerde ve insanın kendi iç dünyasında sakladığı görünmez dinamikleri açığa çıkaran derinlikli bir psikolojik mercektir. Konforlu yalanlarla vedalaşıp, hayatı ve insan zihnini en filtresiz, en \'çıplak\' haliyle okumaya hazır mısınız?'
+          ];
+          
+          if (data.heroSubtitle && knownOldSubtitles.some(old => data.heroSubtitle.includes(old.substring(0, 50)))) {
+             data.heroSubtitle = 'Tatlı yalanlarla uyumak mı, sarsıcı gerçeklere uyanmak mı? Sosyal maskeleri yıkan, ilişkilerdeki gizli niyetleri ve insan doğasını tüm \'çıplaklığıyla\' deşifre eden sarsıcı bir başucu eseri. Görünmeyeni görmek ve hayatın kontrolünü eline almak için; gözlükleri takma zamanı.';
+          }
+          
+          setSettings(prev => ({ ...prev, ...data }));
         }
       } catch (error) {
         console.error("Error fetching settings:", error);
@@ -288,11 +306,15 @@ export default function Admin({ user }: AdminProps) {
       const msgsSnap = await getDocs(collection(db, 'messages'));
       const consultingSnap = await getDocs(collection(db, 'consulting_requests'));
       
+      const statsDocSnap = await getDoc(doc(db, 'settings', 'stats'));
+      const visitorsCount = statsDocSnap.exists() ? statsDocSnap.data().totalVisitors || 0 : 0;
+      
       setStats({
         totalOrders: ordersSnap.size,
         totalSubscribers: subsSnap.size,
         totalMessages: msgsSnap.size,
-        totalConsultingRequests: consultingSnap.size
+        totalConsultingRequests: consultingSnap.size,
+        totalVisitors: visitorsCount
       });
 
       setOrders(ordersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -722,7 +744,14 @@ export default function Admin({ user }: AdminProps) {
               {activeTab === 'analytics' ? (
               <div className="space-y-6">
                 <h2 className="text-2xl font-serif text-white mb-6">Analitik ve İstatistikler</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-zinc-400 font-medium">Toplam Ziyaretçi</h3>
+                      <BarChart3 className="w-5 h-5 text-brand-400" />
+                    </div>
+                    <p className="text-4xl font-serif text-white">{stats.totalVisitors}</p>
+                  </div>
                   <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-zinc-400 font-medium">Toplam Sipariş</h3>
@@ -746,14 +775,20 @@ export default function Admin({ user }: AdminProps) {
                   </div>
                 </div>
                 <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6 mt-8">
-                  <h3 className="text-lg font-medium text-white mb-4">Google Analytics Entegrasyonu</h3>
+                  <h3 className="text-lg font-medium text-white mb-4">Profesyonel Reklam & Analiz Entegrasyonları</h3>
                   <p className="text-zinc-400 mb-6">
-                    Sitenizin detaylı ziyaretçi trafiğini, sayfa görüntülemelerini ve dönüşüm oranlarını takip etmek için Google Analytics kullanabilirsiniz.
+                    Aşağıdaki araçlarla sitenizin performansını artırabilir, ziyaretçilerinizi izleyebilir ve Google & Meta (Facebook/Instagram) tarafında hedef kitle reklam kampanyaları oluşturabilirsiniz. Ayarlar bölümünden (SEO & Meta Metinleri sekmesinden) Pixel veya Analytics kodlarınızı sisteme ekleyebilirsiniz.
                   </p>
-                  <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors">
-                    <BarChart3 className="w-5 h-5 mr-2" />
-                    Google Analytics Paneline Git
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button onClick={() => { setActiveTab('settings'); setSettingsTab('seo'); }} className="inline-flex items-center px-6 py-3 bg-brand-500 hover:bg-brand-400 text-black rounded-lg transition-colors font-medium">
+                      <Settings className="w-5 h-5 mr-2" />
+                      İzleme Kodlarını Ekle
+                    </button>
+                    <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors">
+                      <BarChart3 className="w-5 h-5 mr-2" />
+                      Google Analytics
+                    </a>
+                  </div>
                 </div>
               </div>
             ) : activeTab === 'orders' ? (
@@ -1376,32 +1411,48 @@ export default function Admin({ user }: AdminProps) {
                           </div>
                         </div>
 
-                        <h4 className="text-md font-medium text-zinc-300 mb-4">Ana Sayfa Butonları</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <h4 className="text-md font-medium text-zinc-300 mb-4">Ana Sayfa Kahraman (Hero) Butonları</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Buton 1 (Kitap)</label>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Kitaba Git Butonu (Soluk Buton)</label>
                             <input
                               type="text"
-                              value={(settings as any).heroCta1 || 'Kitabı İncele'}
+                              value={(settings as any).heroCta1 || 'Arka Kapak Yazısını Oku'}
                               onChange={e => setSettings({ ...settings, heroCta1: e.target.value } as any)}
                               className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                              placeholder="Örn: Arka Kapak Yazısını Oku"
                             />
+                            <p className="text-xs text-zinc-500 mt-2">Ana sayfada ve Kitap sayfasında kullanıcıyı kitap detaylarına yönlendiren Buton.</p>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Buton 2 (Sipariş)</label>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Satın Alma Butonu (Altın Buton)</label>
                             <input
                               type="text"
-                              value={(settings as any).heroCta2 || 'Hemen Sipariş Ver'}
+                              value={(settings as any).heroCta2 || 'Kopyanı Hemen Ayırt'}
                               onChange={e => setSettings({ ...settings, heroCta2: e.target.value } as any)}
                               className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                              placeholder="Örn: Kopyanı Hemen Ayırt"
+                            />
+                            <p className="text-xs text-zinc-500 mt-2">Ana sayfada ve Kitap sayfasında direkt ödemeye yönlendiren öne çıkan buton.</p>
+                          </div>
+                        </div>
+
+                        <h4 className="text-md font-medium text-zinc-300 mt-8 mb-4">Ana Sayfa Felsefe Sözü (Alıntı)</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                          <div className="col-span-1 md:col-span-2">
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Alıntı Metni</label>
+                            <textarea
+                              value={(settings as any).quoteText || '"İnsanların çoğu gerçeği aramaz, sadece inandıkları yalanları doğrulayacak birilerini arar. Bu kitap, o yalanları yüzünüze çarpmak için yazıldı."'}
+                              onChange={e => setSettings({ ...settings, quoteText: e.target.value } as any)}
+                              className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 h-24 resize-none"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Buton 3 (Danışmanlık)</label>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Alıntı Sahibi</label>
                             <input
                               type="text"
-                              value={(settings as any).heroCta3 || 'Danışmanlık Al'}
-                              onChange={e => setSettings({ ...settings, heroCta3: e.target.value } as any)}
+                              value={(settings as any).quoteAuthor || 'İshak Alper'}
+                              onChange={e => setSettings({ ...settings, quoteAuthor: e.target.value } as any)}
                               className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                             />
                           </div>
@@ -1409,19 +1460,19 @@ export default function Admin({ user }: AdminProps) {
                       </div>
 
                       <div className="pt-4">
-                        <h4 className="text-md font-medium text-zinc-300 mb-4">Hakkımda Sayfası Butonları</h4>
+                        <h4 className="text-md font-medium text-zinc-300 mb-4">Diğer Sayfa Butonları</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">Kitap İnceleme Linki Metni</label>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">İlk Sayfaları Oku Buton Metni (Kitap Sayfası)</label>
                             <input
                               type="text"
-                              value={(settings as any).readFirstPagesText || 'Önsözü Oku ve Kitabı İncele'}
+                              value={(settings as any).readFirstPagesText || 'İlk Sayfaları Oku'}
                               onChange={e => setSettings({ ...settings, readFirstPagesText: e.target.value } as any)}
                               className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-zinc-300 mb-2">İletişim Butonu Metni</label>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">İletişim Butonu Metni (Hakkında Sayfası vb.)</label>
                             <input
                               type="text"
                               value={(settings as any).aboutButtonText || 'İletişime Geçin'}
@@ -1429,6 +1480,17 @@ export default function Admin({ user }: AdminProps) {
                               className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                             />
                           </div>
+                        </div>
+
+                        <div className="mt-8">
+                          <label className="block text-sm font-medium text-zinc-300 mb-2">Kitap İlk Sayfalar İçeriği (HTML destekler)</label>
+                          <textarea
+                            value={(settings as any).bookPreviewContent || ''}
+                            onChange={e => setSettings({ ...settings, bookPreviewContent: e.target.value } as any)}
+                            className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 h-64 font-mono text-sm"
+                            placeholder="<p>Kitabın ilk sayfaları buraya...</p>"
+                          />
+                          <p className="text-xs text-zinc-500 mt-1">"İlk Sayfaları Oku" butonuna tıklandığında açılacak metni buraya yazın.</p>
                         </div>
                       </div>
                     </div>
@@ -1543,9 +1605,9 @@ export default function Admin({ user }: AdminProps) {
 
                   {settingsTab === 'consulting' && (
                     <div className="space-y-4">
-                      <h3 className="text-lg font-medium text-brand-400 border-b border-white/10 pb-2">Danışmanlık Bölümü</h3>
+                      <h3 className="text-lg font-medium text-brand-400 border-b border-white/10 pb-2">İletişim & Danışmanlık Sayfası Üst Bilgileri</h3>
                       <div>
-                        <label className="block text-sm font-medium text-zinc-300 mb-2">Danışmanlık Başlığı</label>
+                        <label className="block text-sm font-medium text-zinc-300 mb-2">Başlık (İletişim Sayfası Üst)</label>
                         <input
                           type="text"
                           value={settings.consultancyTitle}
@@ -1554,23 +1616,14 @@ export default function Admin({ user }: AdminProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-zinc-300 mb-2">Danışmanlık Alt Başlığı</label>
+                        <label className="block text-sm font-medium text-zinc-300 mb-2">Alt Başlık (Açıklama Metni)</label>
                         <textarea
                           value={settings.consultancySubtitle}
                           onChange={e => setSettings({ ...settings, consultancySubtitle: e.target.value })}
                           className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 h-24 resize-none"
                         />
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-zinc-300 mb-2">Danışmanlık Buton Metni</label>
-                        <input
-                          type="text"
-                          value={settings.consultancyButtonText}
-                          onChange={e => setSettings({ ...settings, consultancyButtonText: e.target.value })}
-                          className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
-                        />
-                      </div>
-                      <div>
+                      <div className="pt-4">
                         <label className="block text-sm font-medium text-zinc-300 mb-2">Calendly Linki (Opsiyonel)</label>
                         <input
                           type="url"
@@ -1579,16 +1632,7 @@ export default function Admin({ user }: AdminProps) {
                           className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                           placeholder="https://calendly.com/..."
                         />
-                        <p className="text-xs text-zinc-500 mt-1">Eğer burayı doldurursanız, danışmanlık butonları iletişim formu yerine doğrudan takviminize yönlendirir.</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-zinc-300 mb-2">Kitap İlk Sayfalar İçeriği (HTML destekler)</label>
-                        <textarea
-                          value={(settings as any).bookPreviewContent || ''}
-                          onChange={e => setSettings({ ...settings, bookPreviewContent: e.target.value } as any)}
-                          className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 h-64 font-mono text-sm"
-                          placeholder="<p>Kitabın ilk sayfaları buraya...</p>"
-                        />
+                        <p className="text-xs text-zinc-500 mt-1">Eğer burayı doldurursanız, sitedeki "Randevu Al" tarzı etkileşimler iletişim formuna değil doğrudan takviminize yönlendirir.</p>
                       </div>
                     </div>
                   )}
@@ -1777,6 +1821,36 @@ export default function Admin({ user }: AdminProps) {
                         <p className="text-sm text-zinc-400 leading-relaxed">
                           Sitenizin (veya yazılarınızın) linkini WhatsApp, Instagram veya Twitter'da paylaştığınızda otomatik olarak <strong className="text-white">Genel Ayarlar &gt; Profil Fotoğrafı</strong> bölümüne yüklediğiniz görsel kapak olarak gösterilecektir.
                         </p>
+                      </div>
+                      
+                      <div className="pt-6 border-t border-white/10 mt-6">
+                        <h3 className="text-lg font-medium text-brand-400 mb-2">İzleme ve Analitik Entegrasyonları</h3>
+                        <p className="text-sm text-zinc-400 mb-6">Reklam kampanyalarınızı takip etmek (Meta Pixel) veya sitenin gerçek ziyaretçi trafiğini analiz etmek (Google Analytics) için gerekli ölçümleme kimliklerini (ID) aşağıya girebilirsiniz. Girdiğinizde site koduna otomatik olarak eklenecektir.</p>
+                        
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Google Analytics İzleme Kimliği (Measurement ID)</label>
+                            <input
+                              type="text"
+                              value={settings.googleAnalyticsId || ""}
+                              onChange={e => setSettings({ ...settings, googleAnalyticsId: e.target.value })}
+                              className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                              placeholder="Örn: G-12345ABCD"
+                            />
+                            <p className="text-xs text-zinc-500 mt-1">Google Analytics &gt; Admin &gt; Veri Akışları sayfasından bulabilirsiniz (sadece baştaki "G-" kodunu da içerecek şekilde girin).</p>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-zinc-300 mb-2">Meta Pixel ID (Facebook / Instagram Reklamları için)</label>
+                            <input
+                              type="text"
+                              value={settings.metaPixelId || ""}
+                              onChange={e => setSettings({ ...settings, metaPixelId: e.target.value })}
+                              className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                              placeholder="Örn: 5938472910"
+                            />
+                            <p className="text-xs text-zinc-500 mt-1">Meta Business Manager &gt; Olay Yöneticisi &gt; Veri Kaynakları bölümündeki rakamlardan oluşan kimlik numaranızı girin.</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}

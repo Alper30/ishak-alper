@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, BookOpen, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import DOMPurify from 'dompurify';
 
 interface ReadPreviewModalProps {
   isOpen: boolean;
@@ -10,10 +13,28 @@ interface ReadPreviewModalProps {
 }
 
 export default function ReadPreviewModal({ isOpen, onClose }: ReadPreviewModalProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [content, setContent] = useState<string | null>(null);
+  const isTr = i18n.language?.toUpperCase().startsWith('TR');
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      const fetchContent = async () => {
+        try {
+          const docRef = doc(db, 'settings', 'general');
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data.bookPreviewContent) {
+              setContent(data.bookPreviewContent);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching preview content", error);
+        }
+      };
+      fetchContent();
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -55,23 +76,29 @@ export default function ReadPreviewModal({ isOpen, onClose }: ReadPreviewModalPr
             </div>
             
             <div className="p-6 md:p-10 overflow-y-auto prose prose-invert prose-brand max-w-none">
-              <h3 className="text-2xl font-serif text-white mb-6 text-center">{t('readPreview.defaultContent.title1')}</h3>
-              <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
-                {t('readPreview.defaultContent.p1')}
-              </p>
-              <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
-                {t('readPreview.defaultContent.p2')}
-              </p>
-              <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
-                {t('readPreview.defaultContent.p3')}
-              </p>
-              <h4 className="text-xl font-serif text-white mt-8 mb-4">{t('readPreview.defaultContent.title2')}</h4>
-              <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
-                {t('readPreview.defaultContent.p4')}
-              </p>
-              <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
-                {t('readPreview.defaultContent.p5')}
-              </p>
+              {content && isTr ? (
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+              ) : (
+                <>
+                  <h3 className="text-2xl font-serif text-white mb-6 text-center">{t('readPreview.defaultContent.title1')}</h3>
+                  <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
+                    {t('readPreview.defaultContent.p1')}
+                  </p>
+                  <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
+                    {t('readPreview.defaultContent.p2')}
+                  </p>
+                  <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
+                    {t('readPreview.defaultContent.p3')}
+                  </p>
+                  <h4 className="text-xl font-serif text-white mt-8 mb-4">{t('readPreview.defaultContent.title2')}</h4>
+                  <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
+                    {t('readPreview.defaultContent.p4')}
+                  </p>
+                  <p className="text-zinc-300 leading-relaxed mb-6 text-lg">
+                    {t('readPreview.defaultContent.p5')}
+                  </p>
+                </>
+              )}
               
               <div className="mt-12 p-6 bg-brand-500/10 border border-brand-500/20 rounded-xl text-center">
                 <p className="text-brand-300 font-medium mb-4">

@@ -3,7 +3,6 @@ import { collection, addDoc, serverTimestamp, doc, onSnapshot } from 'firebase/f
 import { db } from '../lib/firebase';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, AlertCircle, Brain, TrendingUp, HeartHandshake, Calendar, PhoneCall, ArrowRight } from 'lucide-react';
-import BackButton from '../components/BackButton';
 import { handleFirestoreError, OperationType } from '../lib/errorHandling';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
@@ -102,7 +101,6 @@ export default function Contact() {
         description="Birebir danışmanlık başvurusu yapmak veya sorularınız için İshak Alper ile doğrudan iletişime geçin."
         url="https://ishakalper.com/iletisim"
       />
-      <BackButton />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 id="consultancy-heading" className="text-3xl md:text-5xl font-serif text-white tracking-tight mb-6">
@@ -175,6 +173,48 @@ export default function Contact() {
             </motion.div>
           ))}
         </div>
+
+        {/* Dedicated Social Media Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="relative rounded-3xl overflow-hidden bg-brand-500/5 border border-brand-500/20 mt-12 mb-12 group"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-900/40 via-zinc-950/20 to-transparent z-0" />
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 pointer-events-none">
+            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" className="w-full h-full rotate-12 scale-150">
+              <path fill="currentColor" className="text-brand-500" d="M47.7,-57.2C59.9,-43.3,66.5,-23.5,68.9,-3.3C71.3,16.9,69.5,37.5,57.1,52.3C44.7,67.1,22.4,76.1,2.8,72.7C-16.7,69.3,-33.4,53.4,-45.5,38C-57.5,22.6,-64.9,7.6,-64.6,-6.9C-64.3,-21.4,-56.3,-35.3,-44.6,-49.2C-32.9,-63,-16.4,-76.8,1.8,-79C20.1,-81.2,40.1,-71.8,47.7,-57.2Z" transform="translate(200 200)" />
+            </svg>
+          </div>
+          
+          <div className="relative z-10 p-8 sm:p-10 lg:p-12 flex flex-col lg:flex-row items-center gap-10">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-brand-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-brand-500/30">
+              <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-brand-400 group-hover:scale-110 transition-transform duration-500" />
+            </div>
+            
+            <div className="flex-grow text-center lg:text-left">
+              <h3 className="text-2xl sm:text-3xl font-serif text-white mb-3 tracking-tight">
+                {t('contact.services.socialMedia.title')}
+              </h3>
+              <p className="text-zinc-300 font-light leading-relaxed max-w-3xl lg:mx-0">
+                {t('contact.services.socialMedia.desc')}
+              </p>
+            </div>
+            
+            <div className="flex-shrink-0 w-full lg:w-auto mt-4 lg:mt-0">
+              <a
+                href="#iletisim-formu"
+                onClick={() => setFormData(prev => ({ ...prev, package: t('contact.services.socialMedia.title') }))}
+                className="w-full lg:w-auto inline-flex items-center justify-center py-4 px-8 text-sm font-bold tracking-widest uppercase text-black bg-brand-500 rounded-full hover:bg-brand-400 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1 transition-all duration-300 whitespace-nowrap active:scale-95"
+              >
+                <Calendar className="mr-2 w-5 h-5 flex-shrink-0" />
+                {t('contact.requestAppointment')}
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" id="iletisim-formu">

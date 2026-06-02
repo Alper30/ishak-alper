@@ -8,7 +8,6 @@ import { collection, query, orderBy, limit, onSnapshot, doc } from 'firebase/fir
 import { db } from '../lib/firebase';
 import PurchaseModal from '../components/PurchaseModal';
 import ReadPreviewModal from '../components/ReadPreviewModal';
-import BackButton from '../components/BackButton';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 
@@ -156,7 +155,6 @@ export default function Book() {
         description="Rahatlatıcı yalanları bırakıp yüzleşmeye hazır mısınız? İshak Alper'in sarsıcı yeni kitabı 'Çıplak Gösteren Gözlükler'i inceleyin ve hemen satın alın."
         url="https://ishakalper.com/kitap"
       />
-      <BackButton />
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
@@ -189,10 +187,17 @@ export default function Book() {
                 </motion.div>
                 <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300">
                   <Users className="w-4 h-4 text-brand-400" />
-                  <span>{t('home.readers')}</span>
+                  <span>{(isTr ? (settings as any)?.readersCount : null) || t('home.readers')}</span>
                   <span className="opacity-50">|</span>
                   <ShoppingCart className="w-4 h-4 text-brand-400" />
-                  <span>{t('home.orders')}</span>
+                  <span>{(isTr ? (settings as any)?.ordersCount : null) || t('home.orders')}</span>
+                  {book?.pageCount && (
+                    <>
+                      <span className="opacity-50">|</span>
+                      <BookOpen className="w-4 h-4 text-brand-400" />
+                      <span>{book.pageCount} Sayfa</span>
+                    </>
+                  )}
                 </div>
               </div>
               <h1 id="book-title" className="text-5xl md:text-7xl font-serif font-medium tracking-tight text-white leading-tight">
@@ -213,7 +218,7 @@ export default function Book() {
                   aria-label="Kitabı Satın Alma Seçeneklerini Gör"
                 >
                   <ShoppingCart className="mr-3 w-4 h-4" aria-hidden="true" />
-                  {(settings as any)?.heroCta2 || t('book.buy')}
+                  {(isTr ? (settings as any)?.heroCta2 : null) || t('book.buy')}
                 </Link>
                 <button
                   onClick={() => {
@@ -227,7 +232,7 @@ export default function Book() {
                   aria-label="İlk Sayfaları Oku"
                 >
                   <BookOpen className="mr-3 w-4 h-4 text-brand-400" aria-hidden="true" />
-                  {t('book.readFirstPages')}
+                  {(isTr ? (settings as any)?.readFirstPagesText : null) || t('book.readFirstPages', 'İlk Sayfaları Oku')}
                 </button>
               </div>
 

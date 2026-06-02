@@ -13,9 +13,12 @@ interface LayoutProps {
 
 export default function Layout({ user }: LayoutProps) {
   const location = useLocation();
-  const isHome = location.pathname === '/';
-  const isAdminRoute = location.pathname === '/admin';
+  const isAdminRoute = location.pathname.startsWith('/admin');
   const isCheckout = location.pathname === '/checkout';
+  const isReadPreview = location.pathname === '/kitap/oku';
+  const isHome = location.pathname === '/';
+  
+  const showNavAndFooter = !isAdminRoute && !isCheckout && !isReadPreview;
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -39,11 +42,11 @@ export default function Layout({ user }: LayoutProps) {
       >
         Ana İçeriğe Atla
       </a>
-      {isHome && <Navbar user={user} />}
+      {showNavAndFooter && <Navbar user={user} />}
       <main id="main-content" className="flex-grow focus:outline-none" tabIndex={-1}>
         <Outlet />
       </main>
-      {isHome && <Footer />}
+      {showNavAndFooter && <Footer />}
     </div>
   );
 }

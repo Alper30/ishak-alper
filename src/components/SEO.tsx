@@ -25,6 +25,8 @@ export default function SEO({
   const [globalImage, setGlobalImage] = useState<string>("https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=1920&auto=format&fit=crop");
   const [globalKeywords, setGlobalKeywords] = useState<string>(keywords);
   const [globalDesc, setGlobalDesc] = useState<string>("");
+  const [gaId, setGaId] = useState<string>("");
+  const [pixelId, setPixelId] = useState<string>("");
 
   useEffect(() => {
     const fetchGlobalImage = async () => {
@@ -36,6 +38,8 @@ export default function SEO({
           if (data.profilePictureUrl) setGlobalImage(data.profilePictureUrl);
           if (data.seoKeywords) setGlobalKeywords(data.seoKeywords);
           if (data.seoDescription) setGlobalDesc(data.seoDescription);
+          if (data.googleAnalyticsId) setGaId(data.googleAnalyticsId);
+          if (data.metaPixelId) setPixelId(data.metaPixelId);
         }
       } catch (err) {
         console.error("Error fetching SEO global settings:", err);
@@ -87,6 +91,44 @@ export default function SEO({
       <script type="application/ld+json">
         {JSON.stringify(ldJson)}
       </script>
+
+      {/* Google Analytics */}
+      {gaId && (
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+      )}
+      {gaId && (
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gaId}');
+          `}
+        </script>
+      )}
+
+      {/* Meta Pixel Code */}
+      {pixelId && (
+        <script>
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${pixelId}');
+            fbq('track', 'PageView');
+          `}
+        </script>
+      )}
+      {pixelId && (
+        <noscript>
+          {`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1" />`}
+        </noscript>
+      )}
     </Helmet>
   );
 }

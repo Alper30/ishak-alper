@@ -90,7 +90,7 @@ export default function Navbar({ user }: NavbarProps) {
                 aria-expanded={langDropdownOpen}
               >
                 <Globe className="w-4 h-4" />
-                <span className="uppercase">{i18n.language.substring(0, 2)}</span>
+                <span className="uppercase">{LANGUAGES.find(l => i18n.language.toUpperCase().startsWith(l.code))?.label || 'TÜRKÇE'}</span>
               </button>
               
               <AnimatePresence>
@@ -135,7 +135,7 @@ export default function Navbar({ user }: NavbarProps) {
                 aria-expanded={langDropdownOpen}
               >
                 <Globe className="w-5 h-5" />
-                <span className="text-sm font-medium uppercase">{i18n.language.substring(0, 2)}</span>
+                <span className="text-sm font-medium uppercase">{LANGUAGES.find(l => i18n.language.toUpperCase().startsWith(l.code))?.label || 'TÜRKÇE'}</span>
               </button>
               
               <AnimatePresence>

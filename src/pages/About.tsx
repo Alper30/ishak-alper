@@ -4,7 +4,6 @@ import { Eye, BookOpen, Heart, Award, Globe, Users, Briefcase, MessageCircle } f
 import { Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import BackButton from '../components/BackButton';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 
@@ -36,7 +35,6 @@ export default function About() {
         description="İshak Alper kimdir? Görmeden gören gözler, psikolojik danışmanlık ve kişisel farkındalık felsefesi üzerine detaylı bilgiler."
         url="https://ishakalper.com/hakkimda"
       />
-      <BackButton />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Hero Section */}
@@ -131,7 +129,7 @@ export default function About() {
               to="/kitap"
               className="inline-flex items-center text-brand-400 font-medium hover:text-brand-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 rounded-sm p-1 -ml-1"
             >
-              {(settings as any).readFirstPagesText || t('book.readFirstPages')}
+              {(isTr ? (settings as any).readFirstPagesText : null) || t('book.readFirstPages')}
               <BookOpen className="ml-2 w-5 h-5" aria-hidden="true" />
             </Link>
           </motion.div>
@@ -148,6 +146,8 @@ export default function About() {
               alt={t('about.bookCoverAlt')}
               className="w-full h-full object-cover mix-blend-luminosity"
               referrerPolicy="no-referrer"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/20 to-transparent" />
           </motion.div>
@@ -252,7 +252,7 @@ export default function About() {
               to={settings.aboutButtonLink || "/iletisim"}
               className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-zinc-950 hover:bg-zinc-800 transition-colors rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-500"
             >
-              {settings.aboutButtonText || t('contact.contactUs')}
+              {(isTr ? (settings as any).aboutButtonText : null) || t('contact.contactUs')}
             </Link>
           </div>
         </motion.div>
