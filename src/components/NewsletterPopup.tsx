@@ -79,13 +79,13 @@ export default function NewsletterPopup() {
           >
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors z-20"
+              className="absolute top-3 right-3 p-2 text-zinc-400 hover:text-white transition-colors z-20 rounded-full hover:bg-white/10 active:scale-95"
               aria-label="Kapat"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
 
-            <div className="p-8 md:p-10 text-center relative overflow-hidden">
+            <div className="p-5 sm:p-8 md:p-10 text-center relative overflow-hidden">
               {/* Decorative background elements */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-brand-500/10 blur-[50px] rounded-full pointer-events-none" />
               

@@ -31,6 +31,40 @@
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
+  .rotate-y-\[-15deg\] {
+    transform: rotateY(-15deg);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Prevent iOS Safari from zooming on input focus (requires ≥16px) */
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1rem);
+  }
+
+  /* Eliminate 300ms tap delay and double-tap zoom on interactive elements */
+  button,
+  a,
+  [role="button"],
+  label {
+    touch-action: manipulation;
+  }
+
+  /* Safe-area padding utilities for notched iPhones */
+  .safe-top    { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
 body {

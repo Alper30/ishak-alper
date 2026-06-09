@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { User, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { collection, addDoc, serverTimestamp, query, orderBy, getDocs, deleteDoc, doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth, db, storage } from '../lib/firebase';
+import { db, storage } from '../lib/firebase';
+import { AdminUser, logoutAdmin } from '../lib/adminAuth';
+import AdminLogin from './AdminLogin';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { Plus, LogOut, Edit2, Trash2, Eye, EyeOff, FileText, Settings, Book, BarChart3, Database, ShoppingCart, Users, MessageSquare, Upload, X, Mail, Calendar, Heart, MessageCircle, Send, Bookmark, AlertCircle } from 'lucide-react';
@@ -12,7 +13,9 @@ import BackButton from '../components/BackButton';
 import VideoPlayer from '../components/VideoPlayer';
 
 interface AdminProps {
-  user: User | null;
+  user: AdminUser | null;
+  onLogin: (user: AdminUser) => void;
+  onLogout: () => void;
 }
 
 interface BlogPost {
@@ -32,7 +35,7 @@ interface BlogPost {
   saves?: number;
 }
 
-export default function Admin({ user }: AdminProps) {
+export default function Admin({ user, onLogin, onLogout }: AdminProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -376,7 +379,7 @@ export default function Admin({ user }: AdminProps) {
   };
 
   useEffect(() => {
-    if (user && user.email === 'ishak595@gmail.com') {
+    if (user) {
       fetchPosts();
       fetchStatsAndBooks();
       fetchMessages();
@@ -413,22 +416,10 @@ export default function Admin({ user }: AdminProps) {
     }
   }, [user]);
 
-  const handleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      if (result.user.email !== 'ishak595@gmail.com') {
-        await signOut(auth);
-        showToast('Yetkisiz erişim. Sadece yönetici hesabı ile giriş yapabilirsiniz.');
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-    }
-  };
-
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await logoutAdmin();
+      onLogout();
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -461,7 +452,7 @@ export default function Admin({ user }: AdminProps) {
           videoUrl: currentPost.videoUrl || '',
           published: currentPost.published,
           tags: currentPost.tags || [],
-          authorId: user.uid,
+          authorId: user.email,
           createdAt: serverTimestamp()
         });
       }
@@ -500,7 +491,7 @@ export default function Admin({ user }: AdminProps) {
     confirmAction('15 adet örnek blog yazısı yüklenecek. Onaylıyor musunuz?', async () => {
       setSeeding(true);
       try {
-        const count = await seedBlogPosts(user.uid);
+        const count = await seedBlogPosts(user.email);
         showToast(`${count} adet yazı başarıyla yüklendi!`);
         fetchPosts();
       } catch (error) {
@@ -551,34 +542,8 @@ export default function Admin({ user }: AdminProps) {
     });
   };
 
-  if (!user || user.email !== 'ishak595@gmail.com') {
-    return (
-      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4">
-        <div className="text-center space-y-6 max-w-md w-full">
-          <h1 className="text-3xl font-serif text-white">Yönetim Paneli</h1>
-          <p className="text-zinc-400">Bu alana sadece yetkili kullanıcılar erişebilir.</p>
-          {user && user.email !== 'ishak595@gmail.com' && (
-            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-              Mevcut hesabınız ({user.email}) ile bu sayfaya erişim yetkiniz bulunmuyor. Lütfen yönetici hesabınızla giriş yapın.
-            </div>
-          )}
-          <button
-            onClick={handleLogin}
-            className="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-zinc-950 bg-brand-500 hover:bg-brand-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-950 focus:ring-brand-500 transition-colors shadow-lg shadow-brand-500/20"
-          >
-            Google ile Giriş Yap
-          </button>
-          {user && (
-            <button
-              onClick={handleLogout}
-              className="w-full flex justify-center items-center px-6 py-3 border border-white/10 text-base font-medium rounded-md text-zinc-300 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-950 focus:ring-brand-500 transition-colors mt-4"
-            >
-              Çıkış Yap
-            </button>
-          )}
-        </div>
-      </div>
-    );
+  if (!user) {
+    return <AdminLogin onLogin={onLogin} />;
   }
 
   return (

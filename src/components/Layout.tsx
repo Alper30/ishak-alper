@@ -5,13 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import NewsletterPopup from './NewsletterPopup';
-import { User } from 'firebase/auth';
-
-interface LayoutProps {
-  user: User | null;
-}
-
-export default function Layout({ user }: LayoutProps) {
+export default function Layout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isCheckout = location.pathname === '/checkout';
@@ -42,7 +36,7 @@ export default function Layout({ user }: LayoutProps) {
       >
         Ana İçeriğe Atla
       </a>
-      {showNavAndFooter && <Navbar user={user} />}
+      {showNavAndFooter && <Navbar />}
       <main id="main-content" className="flex-grow focus:outline-none" tabIndex={-1}>
         <Outlet />
       </main>

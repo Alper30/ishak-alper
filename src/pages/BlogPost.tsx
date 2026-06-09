@@ -380,10 +380,10 @@ export default function BlogPost() {
           <div className="p-4 bg-zinc-900/30">
             {/* Action Buttons */}
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={handleLike}
-                  className={`transition-all hover:scale-110 ${
+                  className={`p-2 -m-1 rounded-full transition-all hover:scale-110 active:scale-95 ${
                     isLiked ? 'text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]' : 'text-white hover:text-zinc-300'
                   }`}
                   aria-label={isLiked ? t('blog.unlike') : t('blog.like')}
@@ -392,15 +392,15 @@ export default function BlogPost() {
                 </button>
                 <button
                   onClick={() => setCommentsOpen(!commentsOpen)}
-                  className="text-white hover:text-zinc-300 transition-all hover:scale-110"
+                  className="p-2 -m-1 rounded-full text-white hover:text-zinc-300 transition-all hover:scale-110 active:scale-95"
                   aria-label={t('blog.comment')}
                 >
                   <MessageCircle className="w-7 h-7" />
                 </button>
                 <div className="relative">
-                  <button 
+                  <button
                     onClick={() => setShareModalOpen(!shareModalOpen)}
-                    className="text-white hover:text-zinc-300 transition-all hover:scale-110"
+                    className="p-2 -m-1 rounded-full text-white hover:text-zinc-300 transition-all hover:scale-110 active:scale-95"
                     aria-label={t('blog.share')}
                   >
                     <Send className="w-7 h-7" />
@@ -433,9 +433,9 @@ export default function BlogPost() {
                 </div>
               </div>
               
-              <button 
+              <button
                 onClick={handleSave}
-                className={`transition-all hover:scale-110 ${
+                className={`p-2 -m-1 rounded-full transition-all hover:scale-110 active:scale-95 ${
                   isSaved ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'text-white hover:text-zinc-300'
                 }`}
                 aria-label={isSaved ? t('blog.unsave') : t('blog.save')}
@@ -479,7 +479,7 @@ export default function BlogPost() {
                       onChange={(e) => setNewComment(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
                       placeholder={t('blog.addComment')}
-                      className="flex-1 bg-transparent border-none focus:ring-0 text-sm text-white placeholder-zinc-500 py-2"
+                      className="flex-1 bg-transparent border-none focus:ring-0 text-base text-white placeholder-zinc-500 py-2"
                     />
                     <button
                       onClick={handleAddComment}

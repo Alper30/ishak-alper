@@ -5,10 +5,9 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState, lazy, Suspense } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
 import { HelmetProvider } from 'react-helmet-async';
-import { auth } from './lib/firebase';
 import Layout from './components/Layout';
+import { AdminUser, getAdminMe } from './lib/adminAuth';
 
 // Lazy loading pages for better performance
 const Home = lazy(() => import('./pages/Home'));
@@ -22,7 +21,6 @@ const Checkout = lazy(() => import('./pages/Checkout'));
 const ReadPreview = lazy(() => import('./pages/ReadPreview'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Loading fallback component
 const PageSpinner = () => (
   <div className="w-full flex justify-center py-32">
     <div className="w-8 h-8 border-2 border-zinc-800 border-t-brand-500 rounded-full animate-spin"></div>
@@ -30,15 +28,14 @@ const PageSpinner = () => (
 );
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    getAdminMe().then(user => {
+      setAdminUser(user);
       setIsAuthReady(true);
     });
-    return () => unsubscribe();
   }, []);
 
   if (!isAuthReady) {
@@ -54,14 +51,23 @@ export default function App() {
       <Router>
         <Suspense fallback={<PageSpinner />}>
           <Routes>
-            <Route path="/" element={<Layout user={user} />}>
+            <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="kitap" element={<Book />} />
               <Route path="blog" element={<Blog />} />
               <Route path="blog/:id" element={<BlogPost />} />
               <Route path="iletisim" element={<Contact />} />
               <Route path="hakkimda" element={<About />} />
-              <Route path="admin" element={<Admin user={user} />} />
+              <Route
+                path="admin"
+                element={
+                  <Admin
+                    user={adminUser}
+                    onLogin={setAdminUser}
+                    onLogout={() => setAdminUser(null)}
+                  />
+                }
+              />
             </Route>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/kitap/oku" element={<ReadPreview />} />

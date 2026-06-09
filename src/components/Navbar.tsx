@@ -1,14 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import { User } from 'firebase/auth';
 import { Menu, X, Glasses, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-
-interface NavbarProps {
-  user: User | null;
-}
 
 const LANGUAGES = [
   { code: 'TR', label: 'Türkçe' },
@@ -23,7 +18,7 @@ const LANGUAGES = [
   { code: 'IT', label: 'Italiano' }
 ];
 
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const { t, i18n } = useTranslation();
@@ -208,7 +203,7 @@ export default function Navbar({ user }: NavbarProps) {
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={clsx(
-                      'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900',
+                      'block px-4 py-3.5 rounded-md text-base font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900',
                       isActive
                         ? 'text-brand-400 bg-brand-500/10'
                         : 'text-zinc-400 hover:text-brand-300 hover:bg-brand-500/5'

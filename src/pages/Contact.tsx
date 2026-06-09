@@ -233,7 +233,7 @@ export default function Contact() {
             </p>
           </header>
 
-          <div className="bg-zinc-900/50 border border-white/5 p-8 md:p-12 rounded-2xl shadow-2xl relative overflow-hidden">
+          <div className="bg-zinc-900/50 border border-white/5 p-5 sm:p-8 md:p-12 rounded-2xl shadow-2xl relative overflow-hidden">
             {status === 'success' ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}

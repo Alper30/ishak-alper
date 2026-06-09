@@ -144,15 +144,21 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
               className="flex flex-col items-center mb-8"
             >
-              <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-brand-500/30 bg-black/50 text-brand-400 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-10 shadow-2xl backdrop-blur-md">
-                <Star className="w-4 h-4 fill-brand-400" aria-hidden="true" />
-                <span>{(isTr ? (settings as any).newReleaseBadge : null) || t('home.newRelease')}</span>
-                <div className="w-[1px] h-4 bg-brand-500/30 mx-1" aria-hidden="true" />
-                <Users className="w-4 h-4" aria-hidden="true" />
-                <span>{(isTr ? (settings as any).readersCount : null) || t('home.readers')}</span>
-                <div className="w-[1px] h-4 bg-brand-500/30 mx-1" aria-hidden="true" />
-                <ShoppingCart className="w-4 h-4" aria-hidden="true" />
-                <span>{(isTr ? (settings as any).ordersCount : null) || t('home.orders')}</span>
+              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 px-4 sm:px-6 py-2.5 rounded-2xl border border-brand-500/30 bg-black/50 text-brand-400 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-10 shadow-2xl backdrop-blur-md max-w-full">
+                <span className="flex items-center gap-1.5">
+                  <Star className="w-4 h-4 fill-brand-400 flex-shrink-0" aria-hidden="true" />
+                  {(isTr ? (settings as any).newReleaseBadge : null) || t('home.newRelease')}
+                </span>
+                <div className="hidden sm:block w-[1px] h-4 bg-brand-500/30" aria-hidden="true" />
+                <span className="flex items-center gap-1.5">
+                  <Users className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+                  {(isTr ? (settings as any).readersCount : null) || t('home.readers')}
+                </span>
+                <div className="hidden sm:block w-[1px] h-4 bg-brand-500/30" aria-hidden="true" />
+                <span className="flex items-center gap-1.5">
+                  <ShoppingCart className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+                  {(isTr ? (settings as any).ordersCount : null) || t('home.orders')}
+                </span>
               </div>
               <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-serif font-medium text-white leading-[1.05] tracking-tight mb-8 px-2 drop-shadow-2xl">
                 {displayHeroTitle.split(' ').map((word: string, i: number, arr: string[]) => 

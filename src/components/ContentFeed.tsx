@@ -398,27 +398,27 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
           <div className="p-4 bg-zinc-900/30">
             {/* Action Buttons */}
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleLike(post.id)}
-                  className={`transition-all hover:scale-110 ${
+                  className={`p-2 -m-1 rounded-full transition-all hover:scale-110 active:scale-95 ${
                     likedPosts.has(post.id) ? 'text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]' : 'text-white hover:text-zinc-300'
                   }`}
                   aria-label={likedPosts.has(post.id) ? t('blog.unlike') : t('blog.like')}
                 >
                   <Heart className={`w-7 h-7 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
                 </button>
-                <button 
+                <button
                   onClick={() => toggleComments(post.id)}
-                  className="text-white hover:text-zinc-300 transition-all hover:scale-110" 
+                  className="p-2 -m-1 rounded-full text-white hover:text-zinc-300 transition-all hover:scale-110 active:scale-95"
                   aria-label={t('blog.comment')}
                 >
                   <MessageCircle className="w-7 h-7" />
                 </button>
                 <div className="relative">
-                  <button 
+                  <button
                     onClick={() => setShareModalOpen(shareModalOpen === post.id ? null : post.id)}
-                    className="text-white hover:text-zinc-300 transition-all hover:scale-110"
+                    className="p-2 -m-1 rounded-full text-white hover:text-zinc-300 transition-all hover:scale-110 active:scale-95"
                     aria-label={t('blog.share')}
                   >
                     <Send className="w-7 h-7" />
@@ -451,9 +451,9 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
                 </div>
               </div>
               
-              <button 
+              <button
                 onClick={() => handleSave(post.id)}
-                className={`transition-all hover:scale-110 ${
+                className={`p-2 -m-1 rounded-full transition-all hover:scale-110 active:scale-95 ${
                   savedPosts.has(post.id) ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'text-white hover:text-zinc-300'
                 }`}
                 aria-label={savedPosts.has(post.id) ? t('blog.unsave') : t('blog.save')}
@@ -497,7 +497,7 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
                       onChange={(e) => setNewComment(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleAddComment(post.id)}
                       placeholder={t('blog.addComment')}
-                      className="flex-1 bg-transparent border-none focus:ring-0 text-sm text-white placeholder-zinc-500 py-2"
+                      className="flex-1 bg-transparent border-none focus:ring-0 text-base text-white placeholder-zinc-500 py-2"
                     />
                     <button
                       onClick={() => handleAddComment(post.id)}
