@@ -1,10 +1,10 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { MessageCircle } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import NewsletterPopup from './NewsletterPopup';
+import ConsultBot from './ConsultBot';
 export default function Layout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
@@ -41,6 +41,7 @@ export default function Layout() {
         <Outlet />
       </main>
       {showNavAndFooter && <Footer />}
+      {showNavAndFooter && <ConsultBot />}
     </div>
   );
 }

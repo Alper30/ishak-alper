@@ -265,7 +265,7 @@ export default function Book() {
             >
               <div className="relative aspect-[2/3] rounded-r-2xl rounded-l-sm overflow-hidden shadow-2xl shadow-brand-900/50 border-y border-r border-white/10 border-l-4 border-l-brand-900 transform rotate-y-[-15deg] hover:rotate-y-0 transition-transform duration-700">
                 <img
-                  src={book?.coverImage || "https://storage.googleapis.com/aistudio-janus-prod-us-central1-uploads/9z187121g2h.png"}
+                  src={book?.coverImage || settings?.profilePictureUrl || "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?q=80&w=800&auto=format&fit=crop"}
                   alt={book?.title || t('book.coverImageAlt')}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

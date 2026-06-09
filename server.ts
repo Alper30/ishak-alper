@@ -97,6 +97,43 @@ async function startServer() {
     return res.json({ email: req.admin!.email });
   });
 
+  // ── Chat ─────────────────────────────────────────────────────────────────
+
+  app.post('/api/chat', async (req: Request, res: Response) => {
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    if (!GEMINI_API_KEY) {
+      return res.status(500).json({ error: 'API yapılandırma hatası' });
+    }
+
+    const messages: Array<{ role: string; text: string }> = req.body?.messages || [];
+    if (!messages.length) {
+      return res.status(400).json({ error: 'Mesaj gerekli' });
+    }
+
+    try {
+      const { GoogleGenAI } = await import('@google/genai');
+      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+
+      const SYSTEM_PROMPT = `Sen İshak Alper'in danışmanlık asistanısın. Her zaman Türkçe konuş. Danışmanlık hizmetleri: Zihinsel Yeniden İnşa, Finansal Uyanış, İlişki Dinamikleri, Karanlık Psikoloji & İnsan Okuma, Bütünsel Enerji, VIP Dönüşüm. Kısa (2-4 cümle) ve sıcak yanıtlar ver. İlgilenen kişileri /iletisim sayfasına yönlendir.`;
+
+      const contents = messages.map(msg => ({
+        role: msg.role as 'user' | 'model',
+        parts: [{ text: msg.text }],
+      }));
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents,
+        config: { systemInstruction: SYSTEM_PROMPT, maxOutputTokens: 400 },
+      });
+
+      return res.json({ reply: response.text });
+    } catch (err) {
+      console.error('Gemini API error:', err);
+      return res.status(500).json({ error: 'Yapay zeka yanıt hatası.' });
+    }
+  });
+
   // ── Health ───────────────────────────────────────────────────────────────
 
   app.get('/api/health', (_req, res) => {
