@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Düşünceler & Analizler",
     "thoughtsSubtitle": "İnsan davranışları, ilişkiler ve hayatın görünmeyen tarafları üzerine kısa notlar ve derinlemesine analizler.",
     "heroTitle": "Çıplak Gösteren Gözlükler",
-    "heroSubtitle": "Tatlı yalanlarla uyumak mı, sarsıcı gerçeklere uyanmak mı? Sosyal maskeleri yıkan, ilişkilerdeki gizli niyetleri ve insan doğasını tüm 'çıplaklığıyla' deşifre eden sarsıcı bir başucu eseri. Görünmeyeni görmek ve hayatın kontrolünü eline almak için; gözlükleri takma zamanı."
+    "heroSubtitle": "Tatlı yalanlarla uyumak mı, sarsıcı gerçeklere uyanmak mı? Sosyal maskeleri yıkan, ilişkilerdeki gizli niyetleri ve insan doğasını tüm 'çıplaklığıyla' deşifre eden sarsıcı bir başucu eseri. Görünmeyeni görmek ve hayatın kontrolünü eline almak için; gözlükleri takma zamanı.",
+    "getConsulting": "Danışmanlık Al",
+    "consultingTitle": "Birebir Danışmanlık",
+    "consultingSubtitle": "Kitabın ötesine geçmeye hazır olanlar için. Zihinsel kalıplarını kırmak, ilişkilerini yeniden kurmak ve hayatının kontrolünü ele almak üzere tasarlanmış, kişiye özel danışmanlık programları.",
+    "consultingCta": "Randevu Talep Et",
+    "consultingAllPackages": "Tüm paketleri ve başvuru formunu gör"
   },
   "about": {
     "subtitle": "Yazar, Influencer & Danışman",
@@ -87,6 +92,9 @@
     "reviewsDesc": "Kitabı okuyanların deneyimleri ve düşünceleri.",
     "prevReview": "Önceki Yorum",
     "nextReview": "Sonraki Yorum",
+    "formatsTitle": "Formatını Seç, Yüzleşmeye Başla",
+    "formatsSubtitle": "Sana en uygun okuma deneyimini seç. Hangi formatı seçersen seç, aynı sarsıcı gerçek seni bekliyor.",
+    "selectThisFormat": "Bu Formatı Seç",
     "formats": {
       "fiziki": {
         "title": "Fiziki Kopya (Gerçekle Yüzleş)",
@@ -171,7 +179,9 @@
     "guestUser": "Misafir Kullanıcı",
     "now": "Şimdi",
     "new": "Yeni",
-    "loadMore": "Daha Fazlasını Gör"
+    "loadMore": "Daha Fazlasını Gör",
+    "showLess": "Daha az göster",
+    "openFull": "Yazıyı aç"
   },
   "contact": {
     "title": "İletişim",

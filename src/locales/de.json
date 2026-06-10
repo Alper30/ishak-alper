@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Gedanken & Analysen",
     "thoughtsSubtitle": "Kurze Notizen und tiefgehende Analysen über menschliches Verhalten.",
     "heroTitle": "Die Offenbarende Brille",
-    "heroSubtitle": "Bevorzogen Sie beruhigende Lügen oder die schmerzhafte Wahrheit? Dieses Buch zeigt Ihnen alles."
+    "heroSubtitle": "Bevorzogen Sie beruhigende Lügen oder die schmerzhafte Wahrheit? Dieses Buch zeigt Ihnen alles.",
+    "getConsulting": "Beratung erhalten",
+    "consultingTitle": "Einzelberatung",
+    "consultingSubtitle": "Für alle, die über das Buch hinausgehen wollen. Maßgeschneiderte Beratungsprogramme, um deine Denkmuster zu durchbrechen, deine Beziehungen neu zu gestalten und die Kontrolle über dein Leben zurückzugewinnen.",
+    "consultingCta": "Termin anfragen",
+    "consultingAllPackages": "Alle Pakete und das Antragsformular ansehen"
   },
   "about": {
     "subtitle": "Autor, Influencer & Berater",
@@ -87,11 +92,42 @@
     "reviewsDesc": "Was Leute sagen.",
     "prevReview": "Zurück",
     "nextReview": "Weiter",
+    "formatsTitle": "Wähle dein Format, beginne die Abrechnung",
+    "formatsSubtitle": "Wähle das Leseerlebnis, das am besten zu dir passt. Welches Format du auch wählst, dieselbe erschütternde Wahrheit erwartet dich.",
+    "selectThisFormat": "Dieses Format wählen",
     "formats": {
-      "fiziki": { "title": "Taschenbuch", "desc": "Körperlich.", "features": ["Kostenloser Versand"], "price": "997 TL" },
-      "pdf": { "title": "E-Book", "desc": "Digital.", "features": ["Sofortiger Download"], "price": "495 TL" },
-      "sesli": { "title": "Hörbuch", "desc": "Audio.", "features": ["Studioqualität"], "price": "1450 TL" },
-      "imzali": { "title": "Signierte Ausgabe", "desc": "Autogramm.", "features": ["Limitiert"], "price": "2450 TL" }
+      "fiziki": {
+        "title": "Taschenbuch",
+        "desc": "Körperlich.",
+        "features": [
+          "Kostenloser Versand"
+        ],
+        "price": "997 TL"
+      },
+      "pdf": {
+        "title": "E-Book",
+        "desc": "Digital.",
+        "features": [
+          "Sofortiger Download"
+        ],
+        "price": "495 TL"
+      },
+      "sesli": {
+        "title": "Hörbuch",
+        "desc": "Audio.",
+        "features": [
+          "Studioqualität"
+        ],
+        "price": "1450 TL"
+      },
+      "imzali": {
+        "title": "Signierte Ausgabe",
+        "desc": "Autogramm.",
+        "features": [
+          "Limitiert"
+        ],
+        "price": "2450 TL"
+      }
     }
   },
   "blog": {
@@ -106,7 +142,26 @@
     "comment": "Kommentar",
     "close": "Schließen",
     "copyLink": "Link kopieren",
-    "postImage": "Bild"
+    "postImage": "Bild",
+    "addComment": "Kommentar hinzufügen...",
+    "backToBlog": "Zurück zum Blog",
+    "errorTitle": "Fehler",
+    "guestUser": "Gastbenutzer",
+    "likes": "Gefällt mir",
+    "likesCount": "{{count}} Gefällt mir",
+    "linkCopied": "Link kopiert!",
+    "loadMore": "Mehr anzeigen",
+    "new": "Neu",
+    "noComments": "Noch keine Kommentare. Sei der Erste, der kommentiert!",
+    "now": "Gerade eben",
+    "postComment": "Teilen",
+    "postLoadError": "Beim Laden des Beitrags ist ein Fehler aufgetreten.",
+    "postNotFound": "Beitrag nicht gefunden.",
+    "postNotPublished": "Dieser Beitrag ist nicht veröffentlicht.",
+    "save": "Speichern",
+    "unsave": "Aus Gespeicherten entfernen",
+    "showLess": "Weniger anzeigen",
+    "openFull": "Beitrag öffnen"
   },
   "contact": {
     "title": "Kontakt",
@@ -131,18 +186,53 @@
       "energy": "Energie"
     },
     "services": {
-      "mental": { "title": "Mental", "desc": "Klarheit" },
-      "financial": { "title": "Finanzen", "desc": "Reichtum" },
-      "relationships": { "title": "Beziehungen", "desc": "Dynamiken" },
-      "darkPsychology": { "title": "Psychologie", "desc": "Manipulation" },
-      "energy": { "title": "Energie", "desc": "Fokus" }
+      "mental": {
+        "title": "Mental",
+        "desc": "Klarheit"
+      },
+      "financial": {
+        "title": "Finanzen",
+        "desc": "Reichtum"
+      },
+      "relationships": {
+        "title": "Beziehungen",
+        "desc": "Dynamiken"
+      },
+      "darkPsychology": {
+        "title": "Psychologie",
+        "desc": "Manipulation"
+      },
+      "energy": {
+        "title": "Energie",
+        "desc": "Fokus"
+      },
+      "socialMedia": {
+        "desc": "Strategie für organisches Wachstum auf Instagram, YouTube, TikTok und X. Publikumspsychologie und professionelle Markenpositionierung.",
+        "title": "Social-Media-Wachstum & Strategie"
+      },
+      "vip": {
+        "desc": "Persönliches, intensives Mentoring-Programm. Eine vollständige Transformation in allen Lebensbereichen.",
+        "title": "VIP-Transformation & strategisches Lebensdesign"
+      }
     },
     "errors": {
       "name": "Name ist erforderlich",
       "phone": "Telefon ist erforderlich",
       "email": "Ungültigte Email",
       "message": "Nachricht ist erforderlich"
-    }
+    },
+    "emailPlaceholder": "beispiel@email.com",
+    "followUs": "Folgen Sie uns",
+    "generalConsultancy": "Allgemeine Beratung",
+    "interestedConsultancy": "Beratung, die Sie interessiert",
+    "makeSelection": "Treffen Sie eine Auswahl",
+    "messagePlaceholder": "Wie können wir Ihnen helfen?",
+    "namePlaceholder": "Ihr Vor- und Nachname",
+    "newMessage": "Neue Nachricht senden",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "Termin anfragen",
+    "subtitle": "Professionelle Begleitung für alle, die ihr Potenzial entdecken, mentale Blockaden überwinden und ihrem Leben eine neue Richtung geben wollen.",
+    "successDesc": "Ihre Beratungsanfrage hat uns erfolgreich erreicht. Wir werden uns so bald wie möglich bei Ihnen melden."
   },
   "checkout": {
     "title": "Bezahlen",
@@ -165,7 +255,67 @@
     "orderSuccessMessage": "Ihre Bestellung wird verarbeitet.",
     "orderErrorTitle": "Fehler",
     "orderErrorMessage": "Bitte versuche sie es noch einmal.",
-    "continueShopping": "Weiter"
+    "continueShopping": "Weiter",
+    "backCover": "Rückseite",
+    "backCoverQuote": "\"Die Wahrheit erwischt dich nackt. Du trägst eine Brille — nicht um zu sehen, sondern manchmal um dich zu verstecken, manchmal um zu verbergen. Aber was, wenn deine Brille alles offenbart, was du verbirgst?\"",
+    "backToHome": "Zur Startseite",
+    "bookDetails": {
+      "title": "Die Brille, die nackt zeigt"
+    },
+    "cardHolder": "Name auf der Karte",
+    "cardHolderPlaceholder": "VOR- UND NACHNAME",
+    "city": "Stadt",
+    "cityPlaceholder": "Stadt",
+    "continue": "Weiter",
+    "deliveryAddress": "Lieferadresse",
+    "district": "Bezirk",
+    "districtPlaceholder": "Bezirk",
+    "email": "E-Mail",
+    "emailPlaceholder": "beispiel@email.com",
+    "expiryDatePlaceholder": "MM/JJ",
+    "free": "Kostenlos",
+    "frontCover": "Vorderseite",
+    "fullAddress": "Vollständige Adresse",
+    "fullAddressPlaceholder": "Viertel, Straße, Hausnummer, Wohnungsnummer...",
+    "fullNamePlaceholder": "Ihr Vor- und Nachname",
+    "option": "Option",
+    "options": {
+      "audio": {
+        "desc": "Hochwertiges MP3, gelesen vom Autor selbst.",
+        "name": "Hörbuch"
+      },
+      "pdf": {
+        "desc": "Sofortiger Download, mit allen Geräten kompatibel.",
+        "name": "E-Book (PDF)"
+      },
+      "signed": {
+        "desc": "Persönlich signiert, bevorzugter Versand, Lesezeichen als Geschenk.",
+        "name": "Signierte Sonderausgabe"
+      },
+      "standard": {
+        "desc": "Softcover, Standardversand.",
+        "name": "Gedrucktes Buch (Standardausgabe)"
+      }
+    },
+    "order": "Bestellung",
+    "orderReceived": "Ihre Bestellung ist eingegangen",
+    "orderReceivedDesc": "Ihre Bestellung wurde erfolgreich erstellt. Die Bestelldetails werden an Ihre E-Mail-Adresse gesendet.",
+    "orderSummary": "Bestellübersicht",
+    "pages": "Seiten",
+    "payment": "Zahlung",
+    "paymentInfo": "Zahlungsinformationen",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "Zur Zahlung",
+    "securePaymentDesc": "Sichere Zahlung mit 256-Bit-SSL",
+    "selectFormat": "Buchformat",
+    "selectedFormatDetail": "Detail des gewählten Formats",
+    "shipping": "Versand",
+    "step1": {
+      "desc": "Das ist nicht nur ein Buch, sondern ein Weckruf. Du machst den ersten Schritt, um die Masken abzulegen, die die Gesellschaft dir auferlegt, dich deiner eigenen Realität zu stellen und die Kontrolle über dein Leben zurückzugewinnen.",
+      "selectFormat": "Formatauswahl",
+      "title": "Bist du bereit, dich dir selbst zu stellen?"
+    },
+    "total": "Gesamt"
   },
   "footer": {
     "title": "Fußzeile",
@@ -173,6 +323,37 @@
     "quickLinks": "Links",
     "socialMedia": "Soziale Medien",
     "rights": "Alle Rechte vorbehalten.",
-    "adminLogin": "Admin"
+    "adminLogin": "Admin",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "emailLabel": "E-Mail senden"
+  },
+  "newsletter": {
+    "backToPage": "Zurück zur Seite",
+    "desc": "Die Wahrheit zu sehen erfordert Mut. Erhalten Sie als Erste Zugang zu den wertvollen Inhalten und exklusiven Texten von İshak Alper.",
+    "emailPlaceholder": "Ihre E-Mail-Adresse",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "processing": "Wird verarbeitet...",
+    "spamWarning": "Wir senden keinen Spam. Sie können sich jederzeit abmelden.",
+    "submit": "Eintreten",
+    "successDesc": "Willkommen bei uns. Die exklusiven Inhalte, Buchzitate und Überraschungen von İshak Alper landen bald in Ihrem Postfach.",
+    "successTitle": "Die Tür ist geöffnet!",
+    "title": "Das Tor der Schätze"
+  },
+  "readPreview": {
+    "ctaDesc": "Das war erst der Anfang. Wenn du bis hierher gelesen hast und dir dieses Unbehagen vertraut vorkommt, gibt es kein Zurück mehr. Bist du bereit, deine Maske abzunehmen?",
+    "defaultContent": {
+      "p1": "Jeder hat eine Geschichte, aber nur wenige können ihre eigene wirklich lesen. Die meisten von uns sind damit beschäftigt, in von anderen geschriebenen Drehbüchern die uns zugewiesenen Rollen zu spielen. Ist das Gesicht, das wir im Spiegel sehen, wirklich unseres — oder eine Maske, geformt von der Gesellschaft, unserer Familie und vergangenen Traumata?",
+      "p2": "„Die Brille, die nackt zeigt“ ist eine Metapher. Wenn Sie diese Brille aufsetzen, sehen Sie nicht die Kleidung der Menschen, sondern die Nacktheit ihrer Seele, ihre verborgenen Ängste, ihr Bedürfnis nach Anerkennung und ihre tiefsten Sehnsüchte. Doch noch wichtiger: Im Spiegel werden Sie sich Ihrer eigenen Nacktheit stellen.",
+      "p3": "Warum machen wir in unseren Beziehungen immer wieder dieselben Fehler? Warum fühlen wir uns zu denen hingezogen, die uns nicht lieben, und stoßen jene fort, die uns wirklich lieben? Warum sabotieren wir im Berufsleben manchmal unser eigenes Potenzial?",
+      "p4": "Die Kindheit ist die Zeit, in der uns die erste Maske aufgesetzt wird. „Sei brav“, „Wein nicht“, „Sei stark“... Diese einfachen Befehle werden mit der Zeit zu den Grundpfeilern unserer Persönlichkeit. Doch diese Steine sind in Wahrheit die Mauern eines Kerkers, in dem wir unser wahres Wesen einsperren.",
+      "p5": "In diesem Buch reißen wir diese Mauern eine nach der anderen nieder. Es wird nicht leicht. Sich der eigenen Dunkelheit zu stellen ist manchmal schmerzhaft. Aber denken Sie daran: Dort, wo die Wunde ist, tritt das Licht ein.",
+      "title1": "Einleitung: Bevor du die Brille aufsetzt",
+      "title2": "Erstes Kapitel: Der Fall der Masken"
+    },
+    "firstPages": "Erste Seiten",
+    "goBack": "Zurück",
+    "orderAndRead": "Jetzt bestellen und alles lesen",
+    "orderNow": "Jetzt bestellen",
+    "readyToFaceTruth": "Bist du bereit, dich dir selbst zu stellen?"
   }
 }

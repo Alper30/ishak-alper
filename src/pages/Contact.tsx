@@ -94,6 +94,29 @@ export default function Contact() {
     }
   };
 
+  // Consulting services: prefer admin-defined (settings.consultingPackages); fall back to localized defaults.
+  const defaultServices = [
+    { icon: Brain, title: t('contact.services.mental.title'), desc: t('contact.services.mental.desc') },
+    { icon: TrendingUp, title: t('contact.services.financial.title'), desc: t('contact.services.financial.desc') },
+    { icon: HeartHandshake, title: t('contact.services.relationships.title'), desc: t('contact.services.relationships.desc') },
+    { icon: Brain, title: t('contact.services.darkPsychology.title'), desc: t('contact.services.darkPsychology.desc') },
+    { icon: HeartHandshake, title: t('contact.services.energy.title'), desc: t('contact.services.energy.desc') },
+    { icon: TrendingUp, title: t('contact.services.vip.title'), desc: t('contact.services.vip.desc') }
+  ];
+  const adminConsulting = Array.isArray((settings as any).consultingPackages)
+    ? (settings as any).consultingPackages.filter((p: any) => p && p.enabled !== false && (p.title || '').toString().trim())
+    : [];
+  const iconForPkg = (name?: string) => {
+    switch (name) {
+      case 'financial': case 'vip': case 'social': return TrendingUp;
+      case 'relationships': case 'energy': return HeartHandshake;
+      default: return Brain;
+    }
+  };
+  const services = adminConsulting.length > 0
+    ? adminConsulting.map((p: any) => ({ icon: iconForPkg(p.icon), title: p.title || '', desc: p.desc || '' }))
+    : defaultServices;
+
   return (
     <div className="min-h-screen bg-zinc-950 py-24" aria-labelledby="contact-title">
       <SEO 
@@ -112,38 +135,7 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Brain,
-              title: t('contact.services.mental.title'),
-              desc: t('contact.services.mental.desc')
-            },
-            {
-              icon: TrendingUp,
-              title: t('contact.services.financial.title'),
-              desc: t('contact.services.financial.desc')
-            },
-            {
-              icon: HeartHandshake,
-              title: t('contact.services.relationships.title'),
-              desc: t('contact.services.relationships.desc')
-            },
-            {
-              icon: Brain,
-              title: t('contact.services.darkPsychology.title'),
-              desc: t('contact.services.darkPsychology.desc')
-            },
-            {
-              icon: HeartHandshake,
-              title: t('contact.services.energy.title'),
-              desc: t('contact.services.energy.desc')
-            },
-            {
-              icon: TrendingUp,
-              title: t('contact.services.vip.title'),
-              desc: t('contact.services.vip.desc')
-            }
-          ].map((item, idx) => (
+          {services.map((item, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
@@ -335,12 +327,10 @@ export default function Contact() {
                     className="w-full bg-zinc-950 border border-white/10 focus:ring-brand-500 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:border-transparent transition-shadow"
                   >
                     <option value="">{t('contact.generalConsultancy')} ({t('contact.makeSelection')})</option>
-                    <option value="Zihinsel Yeniden İnşa">{t('contact.services.mental.title')}</option>
-                    <option value="Finansal Uyanış & Özgürlük Psikolojisi">{t('contact.services.financial.title')}</option>
-                    <option value="İlişki Dinamikleri & Sınır Çizme Sanatı">{t('contact.services.relationships.title')}</option>
-                    <option value="Karanlık Psikoloji & İnsan Okuma Sanatı">{t('contact.services.darkPsychology.title')}</option>
-                    <option value="Bütünsel Enerji & Biyohack">{t('contact.services.energy.title')}</option>
-                    <option value="VIP Dönüşüm & Stratejik Yaşam Tasarımı">{t('contact.services.vip.title')}</option>
+                    {services.map((s, i) => (
+                      <option key={i} value={s.title}>{s.title}</option>
+                    ))}
+                    <option value={t('contact.services.socialMedia.title')}>{t('contact.services.socialMedia.title')}</option>
                   </select>
                 </div>
 

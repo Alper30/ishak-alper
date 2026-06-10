@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Pensamientos y Análisis",
     "thoughtsSubtitle": "Notas breves y análisis profundos sobre el comportamiento humano.",
     "heroTitle": "Las Gafas Que Desnudan",
-    "heroSubtitle": "¿Prefieres mentiras reconfortantes o la dolorosa verdad? Este libro te mostrará la realidad."
+    "heroSubtitle": "¿Prefieres mentiras reconfortantes o la dolorosa verdad? Este libro te mostrará la realidad.",
+    "getConsulting": "Obtener asesoría",
+    "consultingTitle": "Asesoría personalizada",
+    "consultingSubtitle": "Para quienes están listos para ir más allá del libro. Programas de asesoría a medida diseñados para romper tus patrones mentales, reconstruir tus relaciones y retomar el control de tu vida.",
+    "consultingCta": "Solicitar una cita",
+    "consultingAllPackages": "Ver todos los paquetes y el formulario"
   },
   "about": {
     "subtitle": "Autor, Influencer y Consultor",
@@ -87,11 +92,42 @@
     "reviewsDesc": "Opiniones.",
     "prevReview": "Anterior",
     "nextReview": "Siguiente",
+    "formatsTitle": "Elige tu formato, comienza el ajuste de cuentas",
+    "formatsSubtitle": "Elige la experiencia de lectura que más te convenga. Sea cual sea el formato que elijas, la misma verdad desgarradora te espera.",
+    "selectThisFormat": "Elegir este formato",
     "formats": {
-      "fiziki": { "title": "Copia física", "desc": "Libro de bolsillo.", "features": ["Envío gratis"], "price": "997 TL" },
-      "pdf": { "title": "PDF", "desc": "Digital.", "features": ["Descarga inmediata"], "price": "495 TL" },
-      "sesli": { "title": "Audiolibro", "desc": "Voz.", "features": ["Calidad de estudio"], "price": "1450 TL" },
-      "imzali": { "title": "Firma personal", "desc": "Autógrafo.", "features": ["Limitado"], "price": "2450 TL" }
+      "fiziki": {
+        "title": "Copia física",
+        "desc": "Libro de bolsillo.",
+        "features": [
+          "Envío gratis"
+        ],
+        "price": "997 TL"
+      },
+      "pdf": {
+        "title": "PDF",
+        "desc": "Digital.",
+        "features": [
+          "Descarga inmediata"
+        ],
+        "price": "495 TL"
+      },
+      "sesli": {
+        "title": "Audiolibro",
+        "desc": "Voz.",
+        "features": [
+          "Calidad de estudio"
+        ],
+        "price": "1450 TL"
+      },
+      "imzali": {
+        "title": "Firma personal",
+        "desc": "Autógrafo.",
+        "features": [
+          "Limitado"
+        ],
+        "price": "2450 TL"
+      }
     }
   },
   "blog": {
@@ -106,7 +142,26 @@
     "comment": "Comentario",
     "close": "Cerrar",
     "copyLink": "Copiar enlace",
-    "postImage": "Imagen"
+    "postImage": "Imagen",
+    "addComment": "Añadir un comentario...",
+    "backToBlog": "Volver al blog",
+    "errorTitle": "Error",
+    "guestUser": "Usuario invitado",
+    "likes": "me gusta",
+    "likesCount": "{{count}} me gusta",
+    "linkCopied": "¡Enlace copiado!",
+    "loadMore": "Ver más",
+    "new": "Nuevo",
+    "noComments": "Aún no hay comentarios. ¡Sé el primero en comentar!",
+    "now": "Ahora",
+    "postComment": "Compartir",
+    "postLoadError": "Se produjo un error al cargar la entrada.",
+    "postNotFound": "Entrada no encontrada.",
+    "postNotPublished": "Esta entrada no está publicada.",
+    "save": "Guardar",
+    "unsave": "Quitar de guardados",
+    "showLess": "Mostrar menos",
+    "openFull": "Abrir entrada"
   },
   "contact": {
     "title": "Contacto",
@@ -131,18 +186,53 @@
       "energy": "Energía"
     },
     "services": {
-      "mental": { "title": "Mental", "desc": "Libertad" },
-      "financial": { "title": "Financiero", "desc": "Riqueza" },
-      "relationships": { "title": "Relaciones", "desc": "Vínculos" },
-      "darkPsychology": { "title": "Psicología", "desc": "Poder" },
-      "energy": { "title": "Energía", "desc": "Enfoque" }
+      "mental": {
+        "title": "Mental",
+        "desc": "Libertad"
+      },
+      "financial": {
+        "title": "Financiero",
+        "desc": "Riqueza"
+      },
+      "relationships": {
+        "title": "Relaciones",
+        "desc": "Vínculos"
+      },
+      "darkPsychology": {
+        "title": "Psicología",
+        "desc": "Poder"
+      },
+      "energy": {
+        "title": "Energía",
+        "desc": "Enfoque"
+      },
+      "socialMedia": {
+        "desc": "Estrategia de crecimiento orgánico en Instagram, YouTube, TikTok y X. Psicología de audiencia y posicionamiento de marca profesional.",
+        "title": "Crecimiento y estrategia en redes sociales"
+      },
+      "vip": {
+        "desc": "Programa de mentoría individual e intensivo. Una transformación total en todas las áreas de tu vida.",
+        "title": "Transformación VIP y diseño de vida estratégico"
+      }
     },
     "errors": {
       "name": "Requerido",
       "phone": "Requerido",
       "email": "Inválido",
       "message": "Requerido"
-    }
+    },
+    "emailPlaceholder": "ejemplo@email.com",
+    "followUs": "Síguenos",
+    "generalConsultancy": "Asesoría general",
+    "interestedConsultancy": "Asesoría que te interesa",
+    "makeSelection": "Haz una selección",
+    "messagePlaceholder": "¿Cómo podemos ayudarte?",
+    "namePlaceholder": "Tu nombre y apellidos",
+    "newMessage": "Enviar un nuevo mensaje",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "Solicitar una cita",
+    "subtitle": "Orientación profesional para quienes desean descubrir su potencial, superar sus bloqueos mentales y dar un nuevo rumbo a su vida.",
+    "successDesc": "Tu solicitud de asesoría nos ha llegado correctamente. Nos pondremos en contacto contigo lo antes posible."
   },
   "checkout": {
     "title": "Pago",
@@ -165,7 +255,67 @@
     "orderSuccessMessage": "Gracias.",
     "orderErrorTitle": "Error",
     "orderErrorMessage": "Intente de nuevo.",
-    "continueShopping": "Continuar"
+    "continueShopping": "Continuar",
+    "backCover": "Contraportada",
+    "backCoverQuote": "\"La verdad te atrapa desnudo. Llevas gafas, no para ver, sino a veces para esconderte, a veces para ocultar. Pero ¿y si tus gafas revelaran todo lo que ocultas?\"",
+    "backToHome": "Volver al inicio",
+    "bookDetails": {
+      "title": "Las Gafas Que Muestran al Desnudo"
+    },
+    "cardHolder": "Nombre en la tarjeta",
+    "cardHolderPlaceholder": "NOMBRE Y APELLIDOS",
+    "city": "Ciudad",
+    "cityPlaceholder": "Ciudad",
+    "continue": "Continuar",
+    "deliveryAddress": "Dirección de entrega",
+    "district": "Distrito",
+    "districtPlaceholder": "Distrito",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "ejemplo@email.com",
+    "expiryDatePlaceholder": "MM/AA",
+    "free": "Gratis",
+    "frontCover": "Portada",
+    "fullAddress": "Dirección completa",
+    "fullAddressPlaceholder": "Barrio, calle, número de edificio, número de piso...",
+    "fullNamePlaceholder": "Su nombre y apellidos",
+    "option": "Opción",
+    "options": {
+      "audio": {
+        "desc": "MP3 de alta calidad, narrado por el propio autor.",
+        "name": "Audiolibro"
+      },
+      "pdf": {
+        "desc": "Descarga instantánea, compatible con todos los dispositivos.",
+        "name": "Libro electrónico (PDF)"
+      },
+      "signed": {
+        "desc": "Firmado personalmente, envío prioritario, marcapáginas de regalo.",
+        "name": "Edición especial firmada"
+      },
+      "standard": {
+        "desc": "Tapa blanda, envío estándar.",
+        "name": "Libro físico (edición estándar)"
+      }
+    },
+    "order": "Pedido",
+    "orderReceived": "Hemos recibido tu pedido",
+    "orderReceivedDesc": "Tu pedido se ha creado correctamente. Los detalles se enviarán a tu correo electrónico.",
+    "orderSummary": "Resumen del pedido",
+    "pages": "Páginas",
+    "payment": "Pago",
+    "paymentInfo": "Información de pago",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "Proceder al pago",
+    "securePaymentDesc": "Pago seguro con SSL de 256 bits",
+    "selectFormat": "Formato del libro",
+    "selectedFormatDetail": "Detalle del formato seleccionado",
+    "shipping": "Envío",
+    "step1": {
+      "desc": "Esto no es solo un libro, es una llamada de atención. Estás dando el primer paso para quitarte las máscaras que la sociedad te impone, enfrentarte a tu propia realidad y retomar el control de tu vida.",
+      "selectFormat": "Elección de formato",
+      "title": "¿Estás listo para enfrentarte a ti mismo?"
+    },
+    "total": "Total"
   },
   "footer": {
     "title": "Pie de página",
@@ -173,6 +323,37 @@
     "quickLinks": "Enlaces",
     "socialMedia": "Redes sociales",
     "rights": "Todos los derechos reservados.",
-    "adminLogin": "Administrador"
+    "adminLogin": "Administrador",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "emailLabel": "Enviar correo"
+  },
+  "newsletter": {
+    "backToPage": "Volver a la página",
+    "desc": "Ver la verdad requiere valor. Sé el primero en acceder a los valiosos contenidos y escritos exclusivos de İshak Alper.",
+    "emailPlaceholder": "Tu dirección de correo",
+    "error": "Se produjo un error. Inténtalo de nuevo.",
+    "processing": "Procesando...",
+    "spamWarning": "No enviamos spam. Puedes darte de baja cuando quieras.",
+    "submit": "Entrar",
+    "successDesc": "Bienvenido. Los contenidos exclusivos, las citas del libro y las sorpresas de İshak Alper llegarán pronto a tu buzón.",
+    "successTitle": "¡La puerta se ha abierto!",
+    "title": "La puerta de los tesoros"
+  },
+  "readPreview": {
+    "ctaDesc": "Esto fue solo el comienzo. Si has leído hasta aquí y esa inquietud te resulta familiar, ya no hay vuelta atrás. ¿Estás listo para quitarte la máscara?",
+    "defaultContent": {
+      "p1": "Todos tenemos una historia, pero muy pocos saben leer realmente la suya. La mayoría estamos ocupados interpretando los papeles que nos asignan en guiones escritos por otros. El rostro que vemos en el espejo, ¿es realmente el nuestro o una máscara moldeada por la sociedad, la familia y nuestros traumas pasados?",
+      "p2": "«Las Gafas Que Muestran al Desnudo» es una metáfora. Al ponerte estas gafas, no verás la ropa de las personas, sino la desnudez de su alma, los miedos que ocultan, su necesidad de aprobación y sus deseos más profundos. Pero, sobre todo, al mirarte al espejo te enfrentarás a tu propia desnudez.",
+      "p3": "¿Por qué cometemos una y otra vez los mismos errores en nuestras relaciones? ¿Por qué nos atraen quienes no nos quieren y rechazamos a quienes de verdad nos aman? ¿Por qué a veces saboteamos nuestro propio potencial en el trabajo?",
+      "p4": "La infancia es la etapa en la que nos ponen la primera máscara. «Sé un buen niño», «No llores», «Muéstrate fuerte»... Estas simples órdenes se convierten con el tiempo en los pilares de nuestra personalidad. Pero esas piedras son, en realidad, los muros de una mazmorra donde encerramos nuestra propia esencia.",
+      "p5": "En este libro derribaremos esos muros uno a uno. No será fácil. Enfrentarse a la propia oscuridad a veces duele. Pero recuerda: por donde está la herida, entra la luz.",
+      "title1": "Introducción: antes de ponerte las gafas",
+      "title2": "Capítulo primero: la caída de las máscaras"
+    },
+    "firstPages": "Primeras páginas",
+    "goBack": "Volver",
+    "orderAndRead": "Pide ahora y lee el libro completo",
+    "orderNow": "Pedir ahora",
+    "readyToFaceTruth": "¿Estás listo para enfrentarte a ti mismo?"
   }
 }

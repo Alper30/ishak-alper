@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Pensées & Analyses",
     "thoughtsSubtitle": "Notes courtes et analyses profondes sur le comportement humain.",
     "heroTitle": "Les Lunettes Qui Dénudent",
-    "heroSubtitle": "Préférez-vous des mensonges réconfortants ou la vérité qui blesse mais libère ? Ce livre vous montrera tout ce que vous fuyiez."
+    "heroSubtitle": "Préférez-vous des mensonges réconfortants ou la vérité qui blesse mais libère ? Ce livre vous montrera tout ce que vous fuyiez.",
+    "getConsulting": "Obtenir un conseil",
+    "consultingTitle": "Conseil individuel",
+    "consultingSubtitle": "Pour ceux qui sont prêts à aller au-delà du livre. Des programmes de conseil sur mesure conçus pour briser tes schémas mentaux, reconstruire tes relations et reprendre le contrôle de ta vie.",
+    "consultingCta": "Demander un rendez-vous",
+    "consultingAllPackages": "Voir toutes les offres et le formulaire"
   },
   "about": {
     "subtitle": "Auteur, Influenceur & Consultant",
@@ -87,11 +92,43 @@
     "reviewsDesc": "Ce que les gens disent.",
     "prevReview": "Précédent",
     "nextReview": "Suivant",
+    "formatsTitle": "Choisissez votre format, commencez la confrontation",
+    "formatsSubtitle": "Choisissez l'expérience de lecture qui vous convient le mieux. Quel que soit le format choisi, la même vérité bouleversante vous attend.",
+    "selectThisFormat": "Choisir ce format",
     "formats": {
-      "fiziki": { "title": "Copie Physique", "desc": "Le plaisir de toucher.", "features": ["Couverture", "Livraison gratuite"], "price": "997 TL" },
-      "pdf": { "title": "E-Book", "desc": "Lecture immédiate.", "features": ["Téléchargement immédiat"], "price": "495 TL" },
-      "sesli": { "title": "Livre Audio", "desc": "Écoutez l'auteur.", "features": ["Qualité Studio"], "price": "1450 TL" },
-      "imzali": { "title": "Copie Signée", "desc": "Dédicace spéciale.", "features": ["Signé à votre nom"], "price": "2450 TL" }
+      "fiziki": {
+        "title": "Copie Physique",
+        "desc": "Le plaisir de toucher.",
+        "features": [
+          "Couverture",
+          "Livraison gratuite"
+        ],
+        "price": "997 TL"
+      },
+      "pdf": {
+        "title": "E-Book",
+        "desc": "Lecture immédiate.",
+        "features": [
+          "Téléchargement immédiat"
+        ],
+        "price": "495 TL"
+      },
+      "sesli": {
+        "title": "Livre Audio",
+        "desc": "Écoutez l'auteur.",
+        "features": [
+          "Qualité Studio"
+        ],
+        "price": "1450 TL"
+      },
+      "imzali": {
+        "title": "Copie Signée",
+        "desc": "Dédicace spéciale.",
+        "features": [
+          "Signé à votre nom"
+        ],
+        "price": "2450 TL"
+      }
     }
   },
   "blog": {
@@ -106,7 +143,26 @@
     "comment": "Commentaire",
     "close": "Fermer",
     "copyLink": "Copier le lien",
-    "postImage": "Image de l'article"
+    "postImage": "Image de l'article",
+    "addComment": "Ajouter un commentaire...",
+    "backToBlog": "Retour au blog",
+    "errorTitle": "Erreur",
+    "guestUser": "Utilisateur invité",
+    "likes": "j'aime",
+    "likesCount": "{{count}} j'aime",
+    "linkCopied": "Lien copié !",
+    "loadMore": "Voir plus",
+    "new": "Nouveau",
+    "noComments": "Aucun commentaire pour le moment. Soyez le premier à commenter !",
+    "now": "À l'instant",
+    "postComment": "Publier",
+    "postLoadError": "Une erreur est survenue lors du chargement de l'article.",
+    "postNotFound": "Article introuvable.",
+    "postNotPublished": "Cet article n'est pas publié.",
+    "save": "Enregistrer",
+    "unsave": "Retirer des favoris",
+    "showLess": "Afficher moins",
+    "openFull": "Ouvrir l’article"
   },
   "contact": {
     "title": "Contact",
@@ -131,18 +187,53 @@
       "energy": "Énergie"
     },
     "services": {
-      "mental": { "title": "Mental", "desc": "Libération" },
-      "financial": { "title": "Éveil financier", "desc": "Argent" },
-      "relationships": { "title": "Relations", "desc": "Dynamique" },
-      "darkPsychology": { "title": "Psychologie Noire", "desc": "Manipulations" },
-      "energy": { "title": "Énergie", "desc": "Concentration" }
+      "mental": {
+        "title": "Mental",
+        "desc": "Libération"
+      },
+      "financial": {
+        "title": "Éveil financier",
+        "desc": "Argent"
+      },
+      "relationships": {
+        "title": "Relations",
+        "desc": "Dynamique"
+      },
+      "darkPsychology": {
+        "title": "Psychologie Noire",
+        "desc": "Manipulations"
+      },
+      "energy": {
+        "title": "Énergie",
+        "desc": "Concentration"
+      },
+      "socialMedia": {
+        "desc": "Stratégie de croissance organique sur Instagram, YouTube, TikTok et X. Psychologie de l'audience et positionnement de marque professionnel.",
+        "title": "Croissance & stratégie sur les réseaux sociaux"
+      },
+      "vip": {
+        "desc": "Programme de mentorat individuel et intensif. Une transformation totale dans tous les domaines de votre vie.",
+        "title": "Transformation VIP & conception de vie stratégique"
+      }
     },
     "errors": {
       "name": "Nom requis",
       "phone": "Téléphone requis",
       "email": "Email invalide",
       "message": "Message requis"
-    }
+    },
+    "emailPlaceholder": "exemple@email.com",
+    "followUs": "Suivez-nous",
+    "generalConsultancy": "Conseil général",
+    "interestedConsultancy": "Conseil qui vous intéresse",
+    "makeSelection": "Faites votre choix",
+    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+    "namePlaceholder": "Votre nom et prénom",
+    "newMessage": "Envoyer un nouveau message",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "Demander un rendez-vous",
+    "subtitle": "Un accompagnement professionnel pour ceux qui veulent découvrir leur potentiel, dépasser leurs blocages mentaux et donner une nouvelle direction à leur vie.",
+    "successDesc": "Votre demande de conseil nous est bien parvenue. Nous vous contacterons dans les plus brefs délais."
   },
   "checkout": {
     "title": "Commander",
@@ -165,7 +256,67 @@
     "orderSuccessMessage": "Votre commande est enregistrée.",
     "orderErrorTitle": "Erreur",
     "orderErrorMessage": "Veuillez réessayer.",
-    "continueShopping": "Continuer"
+    "continueShopping": "Continuer",
+    "backCover": "Quatrième de couverture",
+    "backCoverQuote": "\"La vérité te surprend à nu. Tu portes des lunettes — non pour voir, mais parfois pour te cacher, parfois pour cacher. Mais si tes lunettes révélaient tout ce que tu caches ?\"",
+    "backToHome": "Retour à l'accueil",
+    "bookDetails": {
+      "title": "Les Lunettes Qui Montrent à Nu"
+    },
+    "cardHolder": "Nom sur la carte",
+    "cardHolderPlaceholder": "NOM PRÉNOM",
+    "city": "Ville",
+    "cityPlaceholder": "Ville",
+    "continue": "Continuer",
+    "deliveryAddress": "Adresse de livraison",
+    "district": "District",
+    "districtPlaceholder": "District",
+    "email": "E-mail",
+    "emailPlaceholder": "exemple@email.com",
+    "expiryDatePlaceholder": "MM/AA",
+    "free": "Gratuit",
+    "frontCover": "Première de couverture",
+    "fullAddress": "Adresse complète",
+    "fullAddressPlaceholder": "Quartier, rue, numéro de bâtiment, numéro d'appartement...",
+    "fullNamePlaceholder": "Votre nom et prénom",
+    "option": "Option",
+    "options": {
+      "audio": {
+        "desc": "MP3 de haute qualité, lu par l'auteur lui-même.",
+        "name": "Livre audio"
+      },
+      "pdf": {
+        "desc": "Téléchargement instantané, compatible avec tous les appareils.",
+        "name": "E-book (PDF)"
+      },
+      "signed": {
+        "desc": "Dédicacé à votre nom, envoi prioritaire, marque-page offert.",
+        "name": "Édition spéciale dédicacée"
+      },
+      "standard": {
+        "desc": "Couverture souple, livraison standard.",
+        "name": "Livre physique (édition standard)"
+      }
+    },
+    "order": "Commande",
+    "orderReceived": "Votre commande a été reçue",
+    "orderReceivedDesc": "Votre commande a été créée avec succès. Les détails vous seront envoyés par e-mail.",
+    "orderSummary": "Récapitulatif de la commande",
+    "pages": "Pages",
+    "payment": "Paiement",
+    "paymentInfo": "Informations de paiement",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "Passer au paiement",
+    "securePaymentDesc": "Paiement sécurisé par SSL 256 bits",
+    "selectFormat": "Format du livre",
+    "selectedFormatDetail": "Détail du format sélectionné",
+    "shipping": "Livraison",
+    "step1": {
+      "desc": "Ce n'est pas qu'un livre, c'est un appel au réveil. Tu fais le premier pas pour retirer les masques que la société t'impose, affronter ta propre réalité et reprendre le contrôle de ta vie.",
+      "selectFormat": "Choix du format",
+      "title": "Es-tu prêt à te confronter à toi-même ?"
+    },
+    "total": "Total"
   },
   "footer": {
     "title": "Pied",
@@ -173,6 +324,37 @@
     "quickLinks": "Liens Rapides",
     "socialMedia": "Réseaux Sociaux",
     "rights": "Tous droits réservés.",
-    "adminLogin": "Admin"
+    "adminLogin": "Admin",
+    "allRightsReserved": "Tous droits réservés.",
+    "emailLabel": "Envoyer un e-mail"
+  },
+  "newsletter": {
+    "backToPage": "Retour à la page",
+    "desc": "Voir la vérité demande du courage. Soyez le premier à accéder aux contenus précieux et aux écrits exclusifs d'İshak Alper.",
+    "emailPlaceholder": "Votre adresse e-mail",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "processing": "Traitement en cours...",
+    "spamWarning": "Nous n'envoyons pas de spam. Vous pouvez vous désabonner à tout moment.",
+    "submit": "Entrer",
+    "successDesc": "Bienvenue parmi nous. Les contenus exclusifs, extraits de livres et surprises d'İshak Alper arriveront bientôt dans votre boîte mail.",
+    "successTitle": "La porte s'est ouverte !",
+    "title": "La porte des trésors"
+  },
+  "readPreview": {
+    "ctaDesc": "Ce n'était qu'un début. Si tu as lu jusqu'ici et que ce malaise t'est familier, il n'y a plus de retour en arrière. Es-tu prêt à retirer ton masque ?",
+    "defaultContent": {
+      "p1": "Chacun a une histoire, mais bien peu savent vraiment lire la leur. La plupart d'entre nous sont occupés à jouer les rôles qu'on nous attribue dans des scénarios écrits par d'autres. Le visage que nous voyons dans le miroir est-il vraiment le nôtre, ou un masque façonné par la société, notre famille et nos traumatismes passés ?",
+      "p2": "« Les Lunettes Qui Montrent à Nu » est une métaphore. En portant ces lunettes, vous ne verrez pas les vêtements des gens, mais la nudité de leur âme, les peurs qu'ils dissimulent, leur besoin d'approbation et leurs désirs les plus profonds. Mais surtout, en vous regardant dans le miroir, vous affronterez votre propre nudité.",
+      "p3": "Pourquoi répétons-nous sans cesse les mêmes erreurs dans nos relations ? Pourquoi sommes-nous attirés par ceux qui ne nous aiment pas et repoussons-nous ceux qui nous aiment vraiment ? Pourquoi sabotons-nous parfois notre propre potentiel au travail ?",
+      "p4": "L'enfance est la période où l'on nous met le premier masque. « Sois sage », « Ne pleure pas », « Sois fort »... Ces simples ordres deviennent peu à peu les fondations de notre personnalité. Mais ces pierres sont en réalité les murs d'un cachot où nous emprisonnons notre véritable essence.",
+      "p5": "Dans ce livre, nous abattrons ces murs un à un. Ce ne sera pas facile. Affronter ses propres ténèbres est parfois douloureux. Mais souvenez-vous : c'est là où est la blessure que la lumière entre.",
+      "title1": "Introduction : avant de mettre les lunettes",
+      "title2": "Chapitre premier : la chute des masques"
+    },
+    "firstPages": "Premières pages",
+    "goBack": "Retour",
+    "orderAndRead": "Commander maintenant et lire l'intégralité",
+    "orderNow": "Commander maintenant",
+    "readyToFaceTruth": "Es-tu prêt à te confronter à toi-même ?"
   }
 }

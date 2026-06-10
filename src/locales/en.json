@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Thoughts & Analysis",
     "thoughtsSubtitle": "Short notes and in-depth analysis on human behavior, relationships, and the unseen sides of life.",
     "heroTitle": "Glasses That Show You Naked",
-    "heroSubtitle": "Sleep with sweet lies, or wake up to shattering truths? A profound masterpiece that tears down social masks and deciphers hidden intentions and human nature in all its 'nakedness'. To see the unseen and take control of your life; it's time to put on the glasses."
+    "heroSubtitle": "Sleep with sweet lies, or wake up to shattering truths? A profound masterpiece that tears down social masks and deciphers hidden intentions and human nature in all its 'nakedness'. To see the unseen and take control of your life; it's time to put on the glasses.",
+    "getConsulting": "Get Consulting",
+    "consultingTitle": "One-on-One Consulting",
+    "consultingSubtitle": "For those ready to go beyond the book. Tailored consulting programs designed to break your mental patterns, rebuild your relationships, and take back control of your life.",
+    "consultingCta": "Request an Appointment",
+    "consultingAllPackages": "See all packages and the application form"
   },
   "about": {
     "subtitle": "Author, Influencer & Consultant",
@@ -87,26 +92,33 @@
     "reviewsDesc": "Experiences and thoughts of those who read the book.",
     "prevReview": "Previous Review",
     "nextReview": "Next Review",
+    "formatsTitle": "Choose Your Format, Begin the Reckoning",
+    "formatsSubtitle": "Pick the reading experience that suits you best. Whichever format you choose, the same shattering truth awaits you.",
+    "selectThisFormat": "Choose This Format",
     "formats": {
       "fiziki": {
         "title": "Physical Copy (Face the Truth)",
         "desc": "The joy of reading by touching, it will take its place in your library.",
-        "features": ["Paperback", "Free shipping", "Bookmark gift"]
+        "features": ["Paperback", "Free shipping", "Bookmark gift"],
+        "price": "997 TL"
       },
       "pdf": {
         "title": "E-Book (PDF)",
         "desc": "Digital format for those who want to start reading immediately.",
-        "features": ["Instant download", "Compatible with all devices", "Lifetime access"]
+        "features": ["Instant download", "Compatible with all devices", "Lifetime access"],
+        "price": "1.900 TL"
       },
       "sesli": {
         "title": "Audiobook",
         "desc": "For those who want to listen from the author's own voice.",
-        "features": ["Author voiceover", "High quality MP3", "Offline listening"]
+        "features": ["Author voiceover", "High quality MP3", "Offline listening"],
+        "price": "597 TL"
       },
       "imzali": {
         "title": "Signed Special Edition (Limited Stock)",
         "desc": "For collectors and those looking for a special gift.",
-        "features": ["Personalized signature", "Special hardcover", "Priority shipping", "Surprise gift"]
+        "features": ["Personalized signature", "Special hardcover", "Priority shipping", "Surprise gift"],
+        "price": "3.000 TL"
       }
     }
   },
@@ -166,7 +178,10 @@
     "postComment": "Post",
     "guestUser": "Guest User",
     "now": "Now",
-    "new": "New"
+    "new": "New",
+    "loadMore": "Load More",
+    "showLess": "Show less",
+    "openFull": "Open post"
   },
   "contact": {
     "title": "Contact",

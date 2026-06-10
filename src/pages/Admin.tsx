@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, serverTimestamp, query, orderBy, getDocs, deleteDoc, doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../lib/firebase';
 import { AdminUser, logoutAdmin } from '../lib/adminAuth';
 import AdminLogin from './AdminLogin';
@@ -45,14 +45,23 @@ export default function Admin({ user, onLogin, onLogout }: AdminProps) {
   const [seeding, setSeeding] = useState(false);
   const [uploadingFile, setUploadingFile] = useState<{ [key: string]: boolean }>({});
   const [storageError, setStorageError] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+
+  // Safe filename: strip diacritics/spaces so Storage paths stay valid.
+  const safeName = (name: string) =>
+    name.normalize('NFKD').replace(/[^\w.\-]+/g, '_').replace(/_+/g, '_').slice(-80);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, folder: string, callback: (url: string) => void, fieldKey: string) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    // Allow re-selecting the same file later by clearing the input value.
+    const inputEl = e.target;
 
     setUploadingFile(prev => ({ ...prev, [fieldKey]: true }));
-    
-    // IMAGE HANDLING: Bypass Firebase Storage using base64 + canvas downscaling to fit inside Firestore 1MB limits
+    setUploadProgress(prev => ({ ...prev, [fieldKey]: 0 }));
+
+    // IMAGE HANDLING: downscale in-browser to a base64 data URL so it fits inside the
+    // Firestore 1 MB document limit (no Storage round-trip needed for images).
     if (file.type.startsWith('image/')) {
       try {
         const reader = new FileReader();
@@ -60,68 +69,120 @@ export default function Admin({ user, onLogin, onLogout }: AdminProps) {
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const MAX_WIDTH = 800; // Resize to ensure it fits in Firestore
-            const MAX_HEIGHT = 800;
+            // High-res for covers / profile / about / hero images; standard elsewhere.
+            const hiRes = /cover|kapak|profile|profil|about|hakk|hero|avatar/i.test(fieldKey);
+            const MAX_WIDTH = hiRes ? 1800 : 1280;
+            const MAX_HEIGHT = hiRes ? 1800 : 1280;
+            const SIZE_CAP = hiRes ? 980_000 : 900_000;
+            const MIN_QUALITY = hiRes ? 0.5 : 0.4;
             let width = img.width;
             let height = img.height;
 
             if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-              }
+              if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
             } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-              }
+              if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
             }
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.8); // 80% quality JPEG
-            
+
+            // Compress progressively until the data URL is safely under ~900 KB
+            // (Firestore docs are capped at 1 MB; this leaves room for other fields).
+            let quality = 0.92;
+            let dataUrl = canvas.toDataURL('image/jpeg', quality);
+            while (dataUrl.length > SIZE_CAP && quality > MIN_QUALITY) {
+              quality -= 0.07;
+              dataUrl = canvas.toDataURL('image/jpeg', quality);
+            }
+
             callback(dataUrl);
             setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+            setUploadProgress(prev => ({ ...prev, [fieldKey]: 100 }));
             showToast('Görsel başarıyla eklendi!');
+            if (inputEl) inputEl.value = '';
           };
           img.onerror = () => {
-             setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
-             showToast('Görsel işlenemedi.');
+            setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+            showToast('Görsel işlenemedi. Lütfen geçerli bir resim dosyası seçin.');
+            if (inputEl) inputEl.value = '';
           };
           img.src = event.target?.result as string;
         };
+        reader.onerror = () => {
+          setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+          showToast('Görsel okunamadı.');
+          if (inputEl) inputEl.value = '';
+        };
         reader.readAsDataURL(file);
-        return; // Exit here, handled entirely in-browser
+        return; // handled entirely in-browser
       } catch (err) {
-        console.error("Base64 converion error:", err);
+        console.error('Image processing error:', err);
+        setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+        showToast('Görsel işlenirken bir hata oluştu.');
+        if (inputEl) inputEl.value = '';
+        return;
       }
     }
 
-    // NON-IMAGE (Video, etc) HANDLING: Requires Firebase Storage
+    // VIDEO / OTHER FILES: uploaded to Firebase Storage (requires storage.rules to be deployed).
+    const MAX_VIDEO_BYTES = 200 * 1024 * 1024; // 200 MB
+    if (file.size > MAX_VIDEO_BYTES) {
+      setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+      showToast(`Dosya çok büyük (${(file.size / 1024 / 1024).toFixed(0)} MB). En fazla 200 MB yükleyebilirsiniz veya bir YouTube/Vimeo linki kullanın.`);
+      if (inputEl) inputEl.value = '';
+      return;
+    }
+
     try {
-      const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-      
-      const uploadPromise = uploadBytes(storageRef, file);
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('TIMEOUT')), 15000)
-      );
-      
-      await Promise.race([uploadPromise, timeoutPromise]);
-      const downloadURL = await getDownloadURL(storageRef);
-      
+      const storageRef = ref(storage, `${folder}/${Date.now()}_${safeName(file.name)}`);
+      const task = uploadBytesResumable(storageRef, file, { contentType: file.type });
+
+      // Resumable upload with live progress + a generous timeout for large videos.
+      const downloadURL: string = await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          task.cancel();
+          reject(new Error('TIMEOUT'));
+        }, 120000); // 2 minutes
+
+        task.on(
+          'state_changed',
+          (snap) => {
+            const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+            setUploadProgress(prev => ({ ...prev, [fieldKey]: pct }));
+          },
+          (err) => { clearTimeout(timer); reject(err); },
+          async () => {
+            clearTimeout(timer);
+            try { resolve(await getDownloadURL(task.snapshot.ref)); }
+            catch (e) { reject(e); }
+          }
+        );
+      });
+
       callback(downloadURL);
       setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+      setUploadProgress(prev => ({ ...prev, [fieldKey]: 100 }));
       showToast('Dosya başarıyla yüklendi!');
+      if (inputEl) inputEl.value = '';
     } catch (error: any) {
-      console.error("Upload error:", error);
-      if (error.message === 'TIMEOUT' || error.code === 'storage/retry-limit-exceeded' || error.code === 'storage/unauthorized' || error.code === 'storage/unknown') {
+      console.error('Upload error:', error);
+      const code = error?.code || error?.message;
+      if (
+        code === 'TIMEOUT' ||
+        code === 'storage/retry-limit-exceeded' ||
+        code === 'storage/unauthorized' ||
+        code === 'storage/unauthenticated' ||
+        code === 'storage/unknown' ||
+        code === 'storage/canceled'
+      ) {
         setStorageError(true);
       } else {
-        showToast('Dosya yüklenirken hata oluştu: ' + error.message);
+        showToast('Dosya yüklenirken hata oluştu: ' + (error?.message || 'bilinmeyen hata'));
       }
       setUploadingFile(prev => ({ ...prev, [fieldKey]: false }));
+      if (inputEl) inputEl.value = '';
     }
   };
   
@@ -1175,6 +1236,81 @@ export default function Admin({ user, onLogin, onLogout }: AdminProps) {
                           Yeni Link Ekle
                         </button>
                       </div>
+
+                      {/* --- Kitap Formatları (Fiziki / PDF / Sesli / İmzalı) --- */}
+                      <div>
+                        <label className="block text-sm font-medium text-zinc-300 mb-2">Kitap Formatları (Fiziki / PDF / Sesli)</label>
+                        <p className="text-xs text-zinc-500 mb-3">Buraya eklediğin formatlar kitap sayfasındaki "Formatını Seç" bölümünde görünür. Hiç eklemezsen varsayılan formatlar gösterilir. PDF/Sesli için kendi dosyanı yükleyebilirsin.</p>
+                        <div className="space-y-4">
+                          {(currentBook.formats || []).map((fmt: any, index: number) => (
+                            <div key={index} className="bg-zinc-950 border border-white/10 rounded-xl p-4 space-y-3">
+                              <div className="flex items-center justify-between gap-3 flex-wrap">
+                                <select
+                                  value={fmt.type || 'fiziki'}
+                                  onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], type: e.target.value }; setCurrentBook({ ...currentBook, formats: a }); }}
+                                  className="bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                >
+                                  <option value="fiziki">Fiziki Kitap</option>
+                                  <option value="pdf">PDF / E-Kitap</option>
+                                  <option value="sesli">Sesli Kitap</option>
+                                  <option value="imzali">İmzalı Baskı</option>
+                                  <option value="other">Diğer</option>
+                                </select>
+                                <div className="flex items-center gap-3">
+                                  <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer">
+                                    <input type="checkbox" checked={fmt.featured || false} onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], featured: e.target.checked }; setCurrentBook({ ...currentBook, formats: a }); }} className="accent-brand-500" />
+                                    Öne çıkar
+                                  </label>
+                                  <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer">
+                                    <input type="checkbox" checked={fmt.enabled !== false} onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], enabled: e.target.checked }; setCurrentBook({ ...currentBook, formats: a }); }} className="accent-brand-500" />
+                                    Aktif
+                                  </label>
+                                  <button type="button" disabled={index === 0} onClick={() => { const a = [...(currentBook.formats || [])]; if (index > 0) { [a[index - 1], a[index]] = [a[index], a[index - 1]]; setCurrentBook({ ...currentBook, formats: a }); } }} className="p-1.5 text-zinc-400 hover:text-white bg-zinc-800 rounded-lg disabled:opacity-30" title="Yukarı taşı">↑</button>
+                                  <button type="button" disabled={index === (currentBook.formats || []).length - 1} onClick={() => { const a = [...(currentBook.formats || [])]; if (index < a.length - 1) { [a[index + 1], a[index]] = [a[index], a[index + 1]]; setCurrentBook({ ...currentBook, formats: a }); } }} className="p-1.5 text-zinc-400 hover:text-white bg-zinc-800 rounded-lg disabled:opacity-30" title="Aşağı taşı">↓</button>
+                                  <button type="button" onClick={() => { const a = [...(currentBook.formats || [])]; a.splice(index, 1); setCurrentBook({ ...currentBook, formats: a }); }} className="p-1.5 text-red-400 hover:text-red-300 bg-red-400/10 rounded-lg"><X className="w-4 h-4" /></button>
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input type="text" value={fmt.title || ''} placeholder="Başlık (örn: Sesli Kitap)" onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], title: e.target.value }; setCurrentBook({ ...currentBook, formats: a }); }} className="bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                                <input type="text" value={fmt.price || ''} placeholder="Fiyat (örn: 597 TL)" onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], price: e.target.value }; setCurrentBook({ ...currentBook, formats: a }); }} className="bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                              </div>
+                              <textarea value={fmt.desc || ''} placeholder="Kısa açıklama" onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], desc: e.target.value }; setCurrentBook({ ...currentBook, formats: a }); }} className="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 h-16" />
+                              <textarea value={Array.isArray(fmt.features) ? fmt.features.join('\n') : (fmt.features || '')} placeholder="Özellikler (her satıra bir tane yaz)" onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], features: e.target.value.split('\n') }; setCurrentBook({ ...currentBook, formats: a }); }} className="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 h-20" />
+                              {(fmt.type === 'pdf' || fmt.type === 'sesli' || fmt.type === 'audio' || fmt.type === 'other') && (
+                                <div className="space-y-2">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <input type="text" value={fmt.fileUrl || ''} placeholder="Dosya bağlantısı (URL) ya da sağdan yükle" onChange={(e) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], fileUrl: e.target.value }; setCurrentBook({ ...currentBook, formats: a }); }} className="flex-1 min-w-[200px] bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                                    <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-white/10 rounded-lg text-xs text-white whitespace-nowrap">
+                                      <Upload className="w-4 h-4" /> Dosya Yükle
+                                      <input type="file" accept={fmt.type === 'sesli' || fmt.type === 'audio' ? 'audio/*' : (fmt.type === 'pdf' ? 'application/pdf' : undefined)} className="hidden" onChange={(e) => handleFileUpload(e, 'books', (url) => { const a = [...(currentBook.formats || [])]; a[index] = { ...a[index], fileUrl: url }; setCurrentBook({ ...currentBook, formats: a }); }, `format-file-${index}`)} />
+                                    </label>
+                                  </div>
+                                  {uploadProgress[`format-file-${index}`] !== undefined && uploadProgress[`format-file-${index}`] < 100 && (
+                                    <div className="w-full bg-zinc-800 rounded-full h-1.5"><div className="bg-brand-500 h-1.5 rounded-full transition-all" style={{ width: `${uploadProgress[`format-file-${index}`]}%` }} /></div>
+                                  )}
+                                  {fmt.fileUrl && <p className="text-xs text-green-400 flex items-center gap-1"><FileText className="w-3 h-3" /> Dosya bağlandı</p>}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex flex-wrap gap-4 mt-3">
+                          <button type="button" onClick={() => { setCurrentBook({ ...currentBook, formats: [...(currentBook.formats || []), { type: 'fiziki', title: '', price: '', desc: '', features: [], fileUrl: '', featured: false, enabled: true }] }); }} className="text-sm text-brand-400 hover:text-brand-300 font-medium flex items-center">
+                            <Plus className="w-4 h-4 mr-1" /> Yeni Format Ekle
+                          </button>
+                          {(currentBook.formats || []).length === 0 && (
+                            <button type="button" onClick={() => { setCurrentBook({ ...currentBook, formats: [
+                              { type: 'fiziki', title: 'Fiziki Kopya', price: '997 TL', desc: 'Kitaplığınızda yer alacak, dokunarak okumanın keyfi.', features: ['Karton kapak', 'Ücretsiz kargo', 'Ayraç hediyeli'], featured: false, enabled: true },
+                              { type: 'pdf', title: 'PDF / E-Kitap', price: '1.900 TL', desc: 'Anında indir, her cihazda oku.', features: ['Anında erişim', 'Tüm cihazlarda açılır', 'Aranabilir metin'], featured: false, enabled: true },
+                              { type: 'sesli', title: 'Sesli Kitap', price: '597 TL', desc: 'Yazarın sesinden, istediğin yerde dinle.', features: ['Profesyonel seslendirme', 'Mobil uyumlu', 'Kaldığın yerden devam'], featured: false, enabled: true },
+                              { type: 'imzali', title: 'İmzalı Özel Baskı', price: '3.000 TL', desc: 'Yazar tarafından imzalı, koleksiyonluk baskı.', features: ['El imzası', 'Özel numaralı', 'Koleksiyonluk', 'Hediye kutusu'], featured: true, enabled: true }
+                            ] }); }} className="text-sm text-zinc-400 hover:text-white font-medium flex items-center">
+                            <Plus className="w-4 h-4 mr-1" /> Varsayılan Formatları Yükle
+                          </button>
+                          )}
+                        </div>
+                      </div>
+
                       <button type="submit" className="w-full px-8 py-3 bg-brand-500 hover:bg-brand-400 text-zinc-950 font-medium rounded-xl transition-colors">
                         Kaydet
                       </button>
@@ -1598,6 +1734,67 @@ export default function Admin({ user, onLogin, onLogout }: AdminProps) {
                           placeholder="https://calendly.com/..."
                         />
                         <p className="text-xs text-zinc-500 mt-1">Eğer burayı doldurursanız, sitedeki "Randevu Al" tarzı etkileşimler iletişim formuna değil doğrudan takviminize yönlendirir.</p>
+                      </div>
+
+                      {/* Danışmanlık buton metinleri */}
+                      <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-zinc-300 mb-2">Kart Buton Metni</label>
+                          <input type="text" value={(settings as any).consultingCtaText || 'Randevu Talep Et'} onChange={e => setSettings({ ...settings, consultingCtaText: e.target.value } as any)} className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Randevu Talep Et" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-zinc-300 mb-2">Alt Büyük Buton Metni</label>
+                          <input type="text" value={(settings as any).consultingAllText || 'Tüm paketleri ve başvuru formunu gör'} onChange={e => setSettings({ ...settings, consultingAllText: e.target.value } as any)} className="w-full bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Tüm paketleri ve başvuru formunu gör" />
+                        </div>
+                      </div>
+
+                      {/* Danışmanlık Paketleri editörü */}
+                      <div className="pt-6 mt-2 border-t border-white/10">
+                        <h3 className="text-lg font-medium text-brand-400 mb-1">Danışmanlık Paketleri</h3>
+                        <p className="text-xs text-zinc-500 mb-4">Buraya eklediğin paketler hem ana sayfadaki “Danışmanlık” bölümünde hem de İletişim sayfasında ve başvuru formundaki listede görünür. Hiç eklemezsen varsayılan paketler gösterilir.</p>
+                        <div className="space-y-4">
+                          {((settings as any).consultingPackages || []).map((pkg: any, index: number) => {
+                            const pkgs = (settings as any).consultingPackages || [];
+                            return (
+                            <div key={index} className="bg-zinc-950 border border-white/10 rounded-xl p-4 space-y-3">
+                              <div className="flex items-center justify-between gap-3 flex-wrap">
+                                <select value={pkg.icon || 'brain'} onChange={e => { const a = [...pkgs]; a[index] = { ...a[index], icon: e.target.value }; setSettings({ ...settings, consultingPackages: a } as any); }} className="bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                  <option value="brain">Zihin</option>
+                                  <option value="financial">Finans</option>
+                                  <option value="relationships">İlişki</option>
+                                  <option value="dark">Karanlık Psikoloji</option>
+                                  <option value="energy">Enerji / Koçluk</option>
+                                  <option value="vip">VIP</option>
+                                  <option value="social">Sosyal Medya</option>
+                                </select>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer"><input type="checkbox" checked={pkg.featured || false} onChange={e => { const a = [...pkgs]; a[index] = { ...a[index], featured: e.target.checked }; setSettings({ ...settings, consultingPackages: a } as any); }} className="accent-brand-500" />Öne çıkar</label>
+                                  <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer"><input type="checkbox" checked={pkg.enabled !== false} onChange={e => { const a = [...pkgs]; a[index] = { ...a[index], enabled: e.target.checked }; setSettings({ ...settings, consultingPackages: a } as any); }} className="accent-brand-500" />Aktif</label>
+                                  <button type="button" disabled={index === 0} onClick={() => { const a = [...pkgs]; [a[index - 1], a[index]] = [a[index], a[index - 1]]; setSettings({ ...settings, consultingPackages: a } as any); }} className="p-1.5 text-zinc-400 hover:text-white bg-zinc-800 rounded-lg disabled:opacity-30" title="Yukarı taşı">↑</button>
+                                  <button type="button" disabled={index === pkgs.length - 1} onClick={() => { const a = [...pkgs]; [a[index + 1], a[index]] = [a[index], a[index + 1]]; setSettings({ ...settings, consultingPackages: a } as any); }} className="p-1.5 text-zinc-400 hover:text-white bg-zinc-800 rounded-lg disabled:opacity-30" title="Aşağı taşı">↓</button>
+                                  <button type="button" onClick={() => { const a = [...pkgs]; a.splice(index, 1); setSettings({ ...settings, consultingPackages: a } as any); }} className="p-1.5 text-red-400 hover:text-red-300 bg-red-400/10 rounded-lg"><X className="w-4 h-4" /></button>
+                                </div>
+                              </div>
+                              <input type="text" value={pkg.title || ''} placeholder="Paket başlığı (örn: Finansal Uyanış)" onChange={e => { const a = [...pkgs]; a[index] = { ...a[index], title: e.target.value }; setSettings({ ...settings, consultingPackages: a } as any); }} className="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                              <textarea value={pkg.desc || ''} placeholder="Paket açıklaması" onChange={e => { const a = [...pkgs]; a[index] = { ...a[index], desc: e.target.value }; setSettings({ ...settings, consultingPackages: a } as any); }} className="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 h-20" />
+                            </div>
+                            );
+                          })}
+                        </div>
+                        <div className="flex flex-wrap gap-4 mt-3">
+                          <button type="button" onClick={() => { setSettings({ ...settings, consultingPackages: [...((settings as any).consultingPackages || []), { icon: 'brain', title: '', desc: '', featured: false, enabled: true }] } as any); }} className="text-sm text-brand-400 hover:text-brand-300 font-medium flex items-center"><Plus className="w-4 h-4 mr-1" /> Yeni Paket Ekle</button>
+                          {((settings as any).consultingPackages || []).length === 0 && (
+                            <button type="button" onClick={() => { setSettings({ ...settings, consultingPackages: [
+                              { icon: 'brain', title: 'Zihinsel Yeniden İnşa', desc: 'Seni geride tutan sınırlayıcı inançları ve kaygı döngülerini söküyoruz; net, kararlı ve sarsılmaz bir zihin kuruyorsun.', featured: false, enabled: true },
+                              { icon: 'financial', title: 'Finansal Uyanış & Özgürlük Psikolojisi', desc: 'Parayla ilişkini kıtlıktan bilinçli bolluğa taşıyoruz: bütçe sistemleri, yatırım mantığı, çoklu gelir ve pasif gelir için net bir yol haritası.', featured: false, enabled: true },
+                              { icon: 'relationships', title: 'İlişki Dinamikleri & Sınır Çizme Sanatı', desc: 'Toksik döngüleri ve “hayır” diyememeyi geride bırak; sağlıklı sınırlar koymayı ve hak ettiğin saygıyı talep etmeyi öğreniyorsun.', featured: false, enabled: true },
+                              { icon: 'dark', title: 'Karanlık Psikoloji & İnsan Okuma Sanatı', desc: 'İnsanları davranışlarından oku, manipülasyona karşı kalkanını kur, ikna ve etkiyi etik sınırlar içinde ustalıkla kullan.', featured: false, enabled: true },
+                              { icon: 'energy', title: 'Bütünsel Enerji & Yaşam Koçluğu', desc: 'Uyku, beslenme ve hareket alışkanlıklarını sürdürülebilir biçimde yeniden tasarla; bedeninle barışık, dinç ve disiplinli bir yaşam kur.', featured: false, enabled: true },
+                              { icon: 'vip', title: 'VIP Dönüşüm & Stratejik Yaşam Tasarımı', desc: 'En üst düzey, birebir ve sana özel program. Zihinsel, ilişkisel, finansal ve fiziksel alanların hepsinde derin ve kalıcı dönüşüm. Kontenjan sınırlı.', featured: true, enabled: true },
+                              { icon: 'social', title: 'Sosyal Medya Büyüme & Marka Stratejisi', desc: 'Organik büyümenin arkasındaki kitle psikolojisini çöz; markanı konumlandır, içeriğini kurgula, takipçiyi gerçek etkiye dönüştür.', featured: false, enabled: true }
+                            ] } as any); }} className="text-sm text-zinc-400 hover:text-white font-medium flex items-center"><Plus className="w-4 h-4 mr-1" /> Varsayılan Paketleri Yükle</button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}

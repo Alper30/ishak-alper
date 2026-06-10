@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Raman & Analîzan",
     "thoughtsSubtitle": "Nasînên kurt û analîzên kûr ên derbarê tevgerên mirovan, têkiliyên wan û aliyên nederbasdar ên jiyanê.",
     "heroTitle": "Berçavkên Ku Tazî Nîşan Didin",
-    "heroSubtitle": "Tu derewên aramker tercîh dikî, an rastiya ku dilê te diêşîne lê te azad dike? Ev pirtûk, wekî neynikekê, wê hemû tiştên tu jê direvî nîşanî te bide."
+    "heroSubtitle": "Tu derewên aramker tercîh dikî, an rastiya ku dilê te diêşîne lê te azad dike? Ev pirtûk, wekî neynikekê, wê hemû tiştên tu jê direvî nîşanî te bide.",
+    "getConsulting": "Şêwirmendiyê bistîne",
+    "consultingTitle": "Şêwirmendiya Yek-bi-Yek",
+    "consultingSubtitle": "Ji bo wan ên ku amade ne ji pirtûkê wêdetir biçin. Bernameyên şêwirmendiyê yên taybet ku ji bo şikandina qalibên we yên derûnî, ji nû ve avakirina têkiliyên we û vegerandina kontrola jiyana we hatine sêwirandin.",
+    "consultingCta": "Daxwaza randevûyê bike",
+    "consultingAllPackages": "Hemû paketan û forma serlêdanê bibîne"
   },
   "about": {
     "subtitle": "Nivîskar, Bandorker & Şêwirmend",
@@ -87,29 +92,48 @@
     "reviewsDesc": "Ezmûn û nêrînên li ser Pirtûkê.",
     "prevReview": "Şîroveya Pêş",
     "nextReview": "Şîroveya Paş",
+    "formatsTitle": "Formata Xwe Hilbijêre, Rûbirûbûnê Dest Pê Bike",
+    "formatsSubtitle": "Tecrubeya xwendinê ya ku herî baş li te tê hilbijêre. Tu format hilbijêrî bila bijêrî, heman rastiya hejker li benda te ye.",
+    "selectThisFormat": "Vê Formatê Hilbijêre",
     "formats": {
       "fiziki": {
         "title": "Kopya Fîzîkî (Bi Rastiyê re Rûbirû Be)",
         "desc": "Kêfxweşiya xwendina li pirtûkxaneya te, bi destlêdanê.",
-        "features": ["Berga karton", "Kargoya belaş", "Bi diyariya pirtûk nîşanê"],
+        "features": [
+          "Berga karton",
+          "Kargoya belaş",
+          "Bi diyariya pirtûk nîşanê"
+        ],
         "price": "997 TL"
       },
       "pdf": {
         "title": "E-Pirtûk (PDF)",
         "desc": "Formatê dîjîtal ji bo yên ku dixwazin yekser dest bi xwendinê bikin.",
-        "features": ["Daxistin bi yekser", "Li hemî amûran têkili", "Gihîştina Jiyanî"],
+        "features": [
+          "Daxistin bi yekser",
+          "Li hemî amûran têkili",
+          "Gihîştina Jiyanî"
+        ],
         "price": "495 TL"
       },
       "sesli": {
         "title": "Pirtûka Dengî (Dengê Rastiyê)",
         "desc": "Pirtûkê bi dengê nivîskarê wê fêhm bike û bihist",
-        "features": ["Bikaranîna bi dema geştiyariyê de", "Kalîteya Stüdyo", "Nêrînên Hestyar"],
+        "features": [
+          "Bikaranîna bi dema geştiyariyê de",
+          "Kalîteya Stüdyo",
+          "Nêrînên Hestyar"
+        ],
         "price": "1450 TL"
       },
       "imzali": {
         "title": "Kopya Îmzakirî û Taybet",
         "desc": "Kopya ji te ra lı gel nave te.",
-        "features": ["Bi navê te", "Nivîsandina kesane", "Kopîyeke bi sînor"],
+        "features": [
+          "Bi navê te",
+          "Nivîsandina kesane",
+          "Kopîyeke bi sînor"
+        ],
         "price": "2450 TL"
       }
     }
@@ -126,7 +150,26 @@
     "comment": "Şîrove",
     "close": "Bigir",
     "copyLink": "Zîncîr Kopyo Bike",
-    "postImage": "Wêneyê Nivîsê"
+    "postImage": "Wêneyê Nivîsê",
+    "addComment": "Şîroveyekê lê zêde bike...",
+    "backToBlog": "Vegere Blogê",
+    "errorTitle": "Çewtî",
+    "guestUser": "Bikarhênerê Mêvan",
+    "likes": "ecibandin",
+    "likesCount": "{{count}} ecibandin",
+    "linkCopied": "Girêdan hate jibergirtin!",
+    "loadMore": "Bêtir Bibîne",
+    "new": "Nû",
+    "noComments": "Hîn şîrove tune ne. Bibe yê yekem ku şîrove dike!",
+    "now": "Niha",
+    "postComment": "Parve bike",
+    "postLoadError": "Dema barkirina nivîsê çewtiyek çêbû.",
+    "postNotFound": "Nivîs nehate dîtin.",
+    "postNotPublished": "Ev nivîs ne weşandî ye.",
+    "save": "Tomar bike",
+    "unsave": "Ji tomarkiriyan derxe",
+    "showLess": "Kêmtir nîşan bide",
+    "openFull": "Nivîsê veke"
   },
   "contact": {
     "title": "Têkilî",
@@ -170,6 +213,14 @@
       "energy": {
         "title": "Xebitîna Enerjî & Fokus",
         "desc": "Hêza dîtına bi çaveki ku nabe ku bi dîyit re dîyinê hîn bibin."
+      },
+      "socialMedia": {
+        "desc": "Stratejiya mezinbûna organîk li Instagram, YouTube, TikTok û X. Psîkolojiya temaşevanan û cihgirtina pispor a brandê.",
+        "title": "Mezinbûn û Stratejiya Medyaya Civakî"
+      },
+      "vip": {
+        "desc": "Bernameya rêberiya yek-bi-yek û tîr. Veguhertinek tam di hemû waran de jiyana we.",
+        "title": "Veguhertina VIP û Sêwirana Stratejîk a Jiyanê"
       }
     },
     "errors": {
@@ -177,7 +228,19 @@
       "phone": "Têkevin Numeryeke baş û dirêjahiya 10 Hejmar",
       "email": "Navnîşana E-nameş şaşê.",
       "message": "Peyam herî kêm bi 10 tîp bê qebûlî."
-    }
+    },
+    "emailPlaceholder": "mînak@email.com",
+    "followUs": "Me Bişopînin",
+    "generalConsultancy": "Şêwirmendiya Giştî",
+    "interestedConsultancy": "Şêwirmendiya Ku Bala We Dikişîne",
+    "makeSelection": "Hilbijartinê bike",
+    "messagePlaceholder": "Em çawa dikarin alîkariya we bikin?",
+    "namePlaceholder": "Nav û Paravnavê we",
+    "newMessage": "Peyamek Nû Bişîne",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "Daxwaza Randevûyê bike",
+    "subtitle": "Rêberiya pispor ji bo wan ên ku dixwazin potansiyela xwe keşf bikin, astengên derûnî derbas bikin û aliyekî nû bidin jiyana xwe.",
+    "successDesc": "Daxwaza we ya şêwirmendiyê bi serketî gihîşt me. Em ê di zûtirîn demê de bi we re têkilî daynin."
   },
   "checkout": {
     "title": "Siparîş Bide",
@@ -200,7 +263,67 @@
     "orderSuccessMessage": "Peyama şopandina bi kerema emeliyê bi serket.",
     "orderErrorTitle": "Bi ser neket",
     "orderErrorMessage": "Kirarê wî bişkokê pûç bû, ji kerema careke dîn bisek.",
-    "continueShopping": "Vegere bi Xwedanî"
+    "continueShopping": "Vegere bi Xwedanî",
+    "backCover": "Bergê Paşî",
+    "backCoverQuote": "\"Rastî te tazî digire. Tu berçavkan datînî—ne ji bo dîtinê, carinan ji bo veşartina xwe, carinan ji bo veşartinê. Lê eger berçavkên te her tiştê ku tu vedişêrî eşkere bike?\"",
+    "backToHome": "Vegere Rûpela Sereke",
+    "bookDetails": {
+      "title": "Berçavkên Tazî Nîşandê"
+    },
+    "cardHolder": "Nav li ser kartê",
+    "cardHolderPlaceholder": "NAV PARAVNAV",
+    "city": "Bajar",
+    "cityPlaceholder": "Bajar",
+    "continue": "Berdewam bike",
+    "deliveryAddress": "Navnîşana Şandinê",
+    "district": "Navçe",
+    "districtPlaceholder": "Navçe",
+    "email": "E-name",
+    "emailPlaceholder": "mînak@email.com",
+    "expiryDatePlaceholder": "MM/SS",
+    "free": "Belaş",
+    "frontCover": "Bergê Pêşî",
+    "fullAddress": "Navnîşana Vekirî",
+    "fullAddressPlaceholder": "Tax, kolan, hejmara avahiyê, hejmara apartmanê...",
+    "fullNamePlaceholder": "Nav û Paravnavê we",
+    "option": "Vebijêrk",
+    "options": {
+      "audio": {
+        "desc": "MP3-a bilind-kalîte, bi dengê nivîskar bi xwe.",
+        "name": "Pirtûka Dengî"
+      },
+      "pdf": {
+        "desc": "Daxistina tavilê, bi hemû amûran re lihevhatî.",
+        "name": "E-Pirtûk (PDF)"
+      },
+      "signed": {
+        "desc": "Bi navê we îmzekirî, şandina pêşîn, nîşana pirtûkê diyarî.",
+        "name": "Çapa Taybet a Îmzekirî"
+      },
+      "standard": {
+        "desc": "Bergê kartonî, şandina standard.",
+        "name": "Pirtûka Fizîkî (Çapa Standard)"
+      }
+    },
+    "order": "Sipariş",
+    "orderReceived": "Sipariça We Hate Wergirtin",
+    "orderReceivedDesc": "Sipariça we bi serketî hate çêkirin. Hûragahiyên sipariçê wê ji navnîşana e-nameya we re bên şandin.",
+    "orderSummary": "Kurteya Sipariçê",
+    "pages": "Rûpel",
+    "payment": "Dayîn",
+    "paymentInfo": "Agahiyên Dayînê",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "Derbasî Dayînê bibe",
+    "securePaymentDesc": "Dayîna ewle bi SSL-a 256-bit",
+    "selectFormat": "Formata Pirtûkê",
+    "selectedFormatDetail": "Hûragahiya Formata Hilbijartî",
+    "shipping": "Şandin",
+    "step1": {
+      "desc": "Ev ne tenê pirtûkek e, banga şiyarbûnê ye. Tu gava yekem davêjî da ku maskeyên ku civakê li te ferz kirine rakî, bi rastiya xwe re rû bi rû bibî û kontrola jiyana xwe ji nû ve bigirî destê xwe.",
+      "selectFormat": "Hilbijartina Formatê",
+      "title": "Tu amade yî ku bi xwe re rû bi rû bibî?"
+    },
+    "total": "Giştî"
   },
   "footer": {
     "title": "Footer",
@@ -208,6 +331,37 @@
     "quickLinks": "Girêdanên Bilez",
     "socialMedia": "Medyaya Civakî",
     "rights": "Hemû maf parastî ne.",
-    "adminLogin": "Têketina Rêveber"
+    "adminLogin": "Têketina Rêveber",
+    "allRightsReserved": "Hemû maf parastî ne.",
+    "emailLabel": "E-name Bişîne"
+  },
+  "newsletter": {
+    "backToPage": "Vegere Rûpelê",
+    "desc": "Dîtina rastiyê wêrekî dixwaze. Bibe yê yekem ku digihîje naveroka hêja û nivîsên taybet ên İshak Alper.",
+    "emailPlaceholder": "Navnîşana e-nameya we",
+    "error": "Çewtiyek çêbû. Ji kerema xwe dîsa biceribîne.",
+    "processing": "Tê pêvajokirin...",
+    "spamWarning": "Em spam naşînin. Hûn dikarin her dem ji lîsteyê derkevin.",
+    "submit": "Têkeve",
+    "successDesc": "Bi xêr hatî nav me. Naveroka taybet, jêgirtinên pirtûkê û surprîzên İshak Alper dê di nêz de di qutiya e-nameya te de bin.",
+    "successTitle": "Derî Vebû!",
+    "title": "Deriyê Xezîneyan"
+  },
+  "readPreview": {
+    "ctaDesc": "Ev tenê destpêk bû. Eger te heta vir xwend û ew bêrehetiya ku tu hîs dikî nas e, êdî vegerek tune. Tu amade yî maskeya xwe rakî?",
+    "defaultContent": {
+      "p1": "Her kesî çîrokek heye, lê pir kêm dikarin çîroka xwe bi rastî bixwînin. Piraniya me bi lîstina rolên ku ji me re hatine dayîn di senaryoyên ku yên din nivîsîne de mijûl in. Rûyê ku em di neynikê de dibînin, bi rastî ya me ye, an maskeyek e ku ji aliyê civak, malbat û trawmayên berê ve hatiye şikilandin?",
+      "p2": "\"Berçavkên Tazî Nîşandê\" metaforek e. Dema tu van berçavkan datînî, tu yê ne cilên mirovan, lê tazîtiya giyanê wan, tirsên ku vedişêrin, hewcedariya wan a pejirandinê û daxwazên wan ên herî kûr bibînî. Lê girîngtir, dema tu li neynikê dinêrî, tu yê bi tazîtiya xwe re rû bi rû bibî.",
+      "p3": "Çima em di têkiliyên xwe de bi berdewamî heman çewtiyan dikin? Çima em ber bi wan kesên ku ji me hez nakin ve tên kişandin û yên ku bi rastî ji me hez dikin paş ve davêjin? Çima em carinan di jiyana kar de potansiyela xwe sabote dikin?",
+      "p4": "Zarokatî ew qonax e ku maskeya yekem li me tê danîn. \"Zarokê baş be\", \"Negirî\", \"Xwe bihêz nîşan bide\"... Ev fermanên hêsan bi demê re dibin kevirên bingehîn ên kesayetiya me. Lê ev kevir bi rastî dîwarên zindanek in ku em cewherê xwe yê rastîn tê de girtî dikin.",
+      "p5": "Di vê pirtûkê de, em ê wan dîwaran yek bi yek hilweşînin. Hêsan nabe. Rû bi rû bûna bi tariya xwe carinan bi êş e. Lê ji bîr neke, li ku derê birîn hebe, ronahî ji wir dikeve hundir.",
+      "title1": "Destpêk: Berî Ku Berçavkan Daynî",
+      "title2": "Beşa Yekem: Ketina Maskeyan"
+    },
+    "firstPages": "Rûpelên Pêşî",
+    "goBack": "Vegere",
+    "orderAndRead": "Niha Sipariş Bike û Hemûyê Bixwîne",
+    "orderNow": "Niha Sipariş Bike",
+    "readyToFaceTruth": "Tu amade yî ku bi xwe re rû bi rû bibî?"
   }
 }

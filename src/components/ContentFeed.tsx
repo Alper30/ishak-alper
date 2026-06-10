@@ -56,7 +56,16 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
   const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
   const [openComments, setOpenComments] = useState<Set<string>>(new Set());
   const [shareModalOpen, setShareModalOpen] = useState<string | null>(null);
-  const [newComment, setNewComment] = useState('');
+  const [commentInputs, setCommentInputs] = useState<{ [postId: string]: string }>({});
+  const [expandedPosts, setExpandedPosts] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (postId: string) => {
+    setExpandedPosts(prev => {
+      const next = new Set(prev);
+      next.has(postId) ? next.delete(postId) : next.add(postId);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const savedLikes = localStorage.getItem('likedPosts');
@@ -174,10 +183,10 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
       
       if (isLiking) {
         newSet.add(postId);
-        setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
+        setPosts(prevPosts => prevPosts.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
       } else {
         newSet.delete(postId);
-        setPosts(posts.map(p => p.id === postId ? { ...p, likes: Math.max(0, p.likes - 1) } : p));
+        setPosts(prevPosts => prevPosts.map(p => p.id === postId ? { ...p, likes: Math.max(0, p.likes - 1) } : p));
       }
       localStorage.setItem('likedPosts', JSON.stringify(Array.from(newSet)));
       
@@ -234,19 +243,20 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
   };
 
   const handleAddComment = (postId: string) => {
-    if (!newComment.trim()) return;
-    
+    const text = (commentInputs[postId] || '').trim();
+    if (!text) return;
+
     const newCommentObj = {
       id: Date.now().toString(),
       author: t('blog.guestUser'),
-      text: newComment,
+      text,
       date: t('blog.now')
     };
-    
-    setPosts(posts.map(p => {
+
+    setPosts(prevPosts => prevPosts.map(p => {
       if (p.id === postId) {
         const updatedComments = [...p.comments, newCommentObj];
-        
+
         try {
           const postRef = doc(db, 'posts', postId);
           setDoc(postRef, {
@@ -256,15 +266,12 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
         } catch (error) {
           console.error("Error updating comments:", error);
         }
-        
-        return {
-          ...p,
-          comments: updatedComments
-        };
+
+        return { ...p, comments: updatedComments };
       }
       return p;
     }));
-    setNewComment('');
+    setCommentInputs(prev => ({ ...prev, [postId]: '' }));
   };
 
   const handleShare = (platform: string, post: Post) => {
@@ -347,7 +354,7 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
                 <span className="font-bold">{post.title}</span>
               )}
               {post.content && (
-                <div className={`text-zinc-300 prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-a:text-brand-400 prose-img:rounded-lg prose-img:w-full line-clamp-4`}>
+                <div className={`text-zinc-300 prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-a:text-brand-400 prose-img:rounded-lg prose-img:w-full ${expandedPosts.has(post.id) ? '' : 'line-clamp-4'}`}>
                   {post.title && post.excerpt ? (
                      <p className="mb-4 last:mb-0">{post.excerpt}</p>
                   ) : (
@@ -366,12 +373,23 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
                 </div>
               )}
               {(post.content || '').length > 200 && (
-                <Link 
-                  to={`/blog/${post.id}`}
-                  className="inline-block text-zinc-500 hover:text-zinc-300 font-medium text-sm mt-1 focus:outline-none"
-                >
-                  {t('blog.readMore')}
-                </Link>
+                <div className="mt-1 flex items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => toggleExpanded(post.id)}
+                    className="inline-block text-zinc-400 hover:text-brand-400 font-medium text-sm focus:outline-none transition-colors"
+                    aria-expanded={expandedPosts.has(post.id)}
+                  >
+                    {expandedPosts.has(post.id) ? t('blog.showLess', 'Daha az göster') : t('blog.readMore')}
+                  </button>
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="inline-flex items-center gap-1 text-zinc-500 hover:text-zinc-300 text-xs focus:outline-none transition-colors"
+                  >
+                    {t('blog.openFull', 'Yazıyı aç')}
+                    <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
               )}
             </div>
           )}
@@ -493,15 +511,15 @@ export default function ContentFeed({ settings }: ContentFeedProps) {
                   <div className="flex items-center gap-3 border border-white/10 rounded-full px-4 py-2 bg-zinc-900/50 focus-within:border-brand-500/50 focus-within:bg-zinc-900 transition-colors">
                     <input
                       type="text"
-                      value={newComment}
-                      onChange={(e) => setNewComment(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleAddComment(post.id)}
+                      value={commentInputs[post.id] || ''}
+                      onChange={(e) => setCommentInputs(prev => ({ ...prev, [post.id]: e.target.value }))}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddComment(post.id); } }}
                       placeholder={t('blog.addComment')}
                       className="flex-1 bg-transparent border-none focus:ring-0 text-base text-white placeholder-zinc-500 py-2"
                     />
                     <button
                       onClick={() => handleAddComment(post.id)}
-                      disabled={!newComment.trim()}
+                      disabled={!(commentInputs[post.id] || '').trim()}
                       className="text-brand-400 font-bold text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:text-brand-300 transition-colors"
                     >
                       {t('blog.postComment')}

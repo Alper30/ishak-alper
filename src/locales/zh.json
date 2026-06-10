@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "思想与分析",
     "thoughtsSubtitle": "关于人类行为的深入分析。",
     "heroTitle": "揭露真相的眼镜",
-    "heroSubtitle": "你宁愿相信谎言还是残酷的真相？这本书会告诉你。"
+    "heroSubtitle": "你宁愿相信谎言还是残酷的真相？这本书会告诉你。",
+    "getConsulting": "获取咨询",
+    "consultingTitle": "一对一咨询",
+    "consultingSubtitle": "为愿意走出书本的人而设。量身定制的咨询方案，助你打破思维定式、重建人际关系，并重新掌控自己的人生。",
+    "consultingCta": "预约咨询",
+    "consultingAllPackages": "查看全部方案与申请表"
   },
   "about": {
     "subtitle": "作者，影响者与顾问",
@@ -87,11 +92,42 @@
     "reviewsDesc": "读者反馈。",
     "prevReview": "以前",
     "nextReview": "下一个",
+    "formatsTitle": "选择你的版本，开始清算",
+    "formatsSubtitle": "选择最适合你的阅读体验。无论你选择哪种版本，同样令人震撼的真相都在等着你。",
+    "selectThisFormat": "选择此版本",
     "formats": {
-      "fiziki": { "title": "实体书", "desc": "纸质书。", "features": ["免运费"], "price": "997 TL" },
-      "pdf": { "title": "电子书(PDF)", "desc": "数字版。", "features": ["即刻下载"], "price": "495 TL" },
-      "sesli": { "title": "有声读物", "desc": "语音版。", "features": ["音控"], "price": "1450 TL" },
-      "imzali": { "title": "签名", "desc": "个人签名。", "features": ["限定"], "price": "2450 TL" }
+      "fiziki": {
+        "title": "实体书",
+        "desc": "纸质书。",
+        "features": [
+          "免运费"
+        ],
+        "price": "997 TL"
+      },
+      "pdf": {
+        "title": "电子书(PDF)",
+        "desc": "数字版。",
+        "features": [
+          "即刻下载"
+        ],
+        "price": "495 TL"
+      },
+      "sesli": {
+        "title": "有声读物",
+        "desc": "语音版。",
+        "features": [
+          "音控"
+        ],
+        "price": "1450 TL"
+      },
+      "imzali": {
+        "title": "签名",
+        "desc": "个人签名。",
+        "features": [
+          "限定"
+        ],
+        "price": "2450 TL"
+      }
     }
   },
   "blog": {
@@ -106,7 +142,26 @@
     "comment": "评论",
     "close": "关闭",
     "copyLink": "复制链接",
-    "postImage": "图片"
+    "postImage": "图片",
+    "addComment": "添加评论……",
+    "backToBlog": "返回博客",
+    "errorTitle": "错误",
+    "guestUser": "访客用户",
+    "likes": "赞",
+    "likesCount": "{{count}} 个赞",
+    "linkCopied": "链接已复制！",
+    "loadMore": "查看更多",
+    "new": "最新",
+    "noComments": "还没有评论，快来发表第一条评论吧！",
+    "now": "刚刚",
+    "postComment": "发布",
+    "postLoadError": "加载文章时出错。",
+    "postNotFound": "未找到文章。",
+    "postNotPublished": "该文章尚未发布。",
+    "save": "收藏",
+    "unsave": "取消收藏",
+    "showLess": "收起",
+    "openFull": "打开文章"
   },
   "contact": {
     "title": "联系",
@@ -131,18 +186,53 @@
       "energy": "能量"
     },
     "services": {
-      "mental": { "title": "精神", "desc": "自由" },
-      "financial": { "title": "金融", "desc": "财富" },
-      "relationships": { "title": "关系", "desc": "联系" },
-      "darkPsychology": { "title": "黑暗", "desc": "控制" },
-      "energy": { "title": "能量", "desc": "焦点" }
+      "mental": {
+        "title": "精神",
+        "desc": "自由"
+      },
+      "financial": {
+        "title": "金融",
+        "desc": "财富"
+      },
+      "relationships": {
+        "title": "关系",
+        "desc": "联系"
+      },
+      "darkPsychology": {
+        "title": "黑暗",
+        "desc": "控制"
+      },
+      "energy": {
+        "title": "能量",
+        "desc": "焦点"
+      },
+      "socialMedia": {
+        "desc": "在 Instagram、YouTube、TikTok 和 X 上的有机增长策略。受众心理与专业品牌定位。",
+        "title": "社交媒体增长与策略"
+      },
+      "vip": {
+        "desc": "一对一强化辅导计划。在你生活的方方面面实现彻底转变。",
+        "title": "VIP 转变与战略人生设计"
+      }
     },
     "errors": {
       "name": "需要",
       "phone": "需要",
       "email": "无效",
       "message": "需要"
-    }
+    },
+    "emailPlaceholder": "example@email.com",
+    "followUs": "关注我们",
+    "generalConsultancy": "综合咨询",
+    "interestedConsultancy": "您感兴趣的咨询",
+    "makeSelection": "请选择",
+    "messagePlaceholder": "我们能为您做些什么？",
+    "namePlaceholder": "您的姓名",
+    "newMessage": "发送新消息",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "预约咨询",
+    "subtitle": "为希望发掘自身潜能、突破心理障碍并为人生赋予新方向的人提供专业指导。",
+    "successDesc": "我们已成功收到您的咨询请求。我们会尽快与您联系。"
   },
   "checkout": {
     "title": "支付",
@@ -165,7 +255,67 @@
     "orderSuccessMessage": "谢谢。",
     "orderErrorTitle": "错误",
     "orderErrorMessage": "再试一次。",
-    "continueShopping": "继续"
+    "continueShopping": "继续",
+    "backCover": "封底",
+    "backCoverQuote": "“真相会赤裸地抓住你。你戴上眼镜，不是为了看清，而是有时为了躲藏，有时为了掩饰。但如果你的眼镜揭露了你所隐藏的一切呢？”",
+    "backToHome": "返回首页",
+    "bookDetails": {
+      "title": "照见赤裸的眼镜"
+    },
+    "cardHolder": "持卡人姓名",
+    "cardHolderPlaceholder": "姓名",
+    "city": "城市",
+    "cityPlaceholder": "城市",
+    "continue": "继续",
+    "deliveryAddress": "收货地址",
+    "district": "区/县",
+    "districtPlaceholder": "区/县",
+    "email": "电子邮箱",
+    "emailPlaceholder": "example@email.com",
+    "expiryDatePlaceholder": "月/年",
+    "free": "免费",
+    "frontCover": "封面",
+    "fullAddress": "详细地址",
+    "fullAddressPlaceholder": "街道、门牌号、楼号、房号……",
+    "fullNamePlaceholder": "您的姓名",
+    "option": "选项",
+    "options": {
+      "audio": {
+        "desc": "作者亲自朗读的高质量 MP3。",
+        "name": "有声书"
+      },
+      "pdf": {
+        "desc": "即时下载，兼容所有设备。",
+        "name": "电子书（PDF）"
+      },
+      "signed": {
+        "desc": "专属签名、优先发货、附赠书签。",
+        "name": "签名特别版"
+      },
+      "standard": {
+        "desc": "平装，标准配送。",
+        "name": "纸质书（标准版）"
+      }
+    },
+    "order": "订单",
+    "orderReceived": "已收到您的订单",
+    "orderReceivedDesc": "您的订单已成功创建。订单详情将发送至您的电子邮箱。",
+    "orderSummary": "订单摘要",
+    "pages": "页",
+    "payment": "付款",
+    "paymentInfo": "付款信息",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "去付款",
+    "securePaymentDesc": "采用 256 位 SSL 安全付款",
+    "selectFormat": "图书格式",
+    "selectedFormatDetail": "所选格式详情",
+    "shipping": "运费",
+    "step1": {
+      "desc": "这不仅是一本书，更是一记唤醒的呼唤。你正迈出第一步，摘下社会强加给你的面具，直面真实的自己，重新掌控自己的人生。",
+      "selectFormat": "选择格式",
+      "title": "你准备好面对自己了吗？"
+    },
+    "total": "合计"
   },
   "footer": {
     "title": "脚",
@@ -173,6 +323,37 @@
     "quickLinks": "友情链接",
     "socialMedia": "社交媒体",
     "rights": "版权所有。",
-    "adminLogin": "管理"
+    "adminLogin": "管理",
+    "allRightsReserved": "版权所有。",
+    "emailLabel": "发送邮件"
+  },
+  "newsletter": {
+    "backToPage": "返回页面",
+    "desc": "看见真相需要勇气。抢先获取 İshak Alper 价值连城的内容与专属文章。",
+    "emailPlaceholder": "您的电子邮箱",
+    "error": "出错了，请重试。",
+    "processing": "处理中……",
+    "spamWarning": "我们不会发送垃圾邮件，您可随时取消订阅。",
+    "submit": "进入",
+    "successDesc": "欢迎加入。İshak Alper 的专属内容、书摘和惊喜很快就会出现在你的邮箱中。",
+    "successTitle": "门已开启！",
+    "title": "宝藏之门"
+  },
+  "readPreview": {
+    "ctaDesc": "这只是开始。如果你读到了这里，并且那份不安让你感到熟悉，那么就再也没有回头路了。你准备好摘下面具了吗？",
+    "defaultContent": {
+      "p1": "每个人都有自己的故事，但很少有人能真正读懂自己的故事。我们大多数人都忙于在别人写好的剧本里扮演被分配的角色。镜中那张脸，真的是我们自己，还是由社会、家庭和过往创伤塑造的面具？",
+      "p2": "《照见赤裸的眼镜》是一个隐喻。当你戴上这副眼镜，你看到的将不是人们的衣着，而是他们灵魂的赤裸、隐藏的恐惧、对认可的渴求以及最深的欲望。但更重要的是，当你照镜子时，你将直面自己的赤裸。",
+      "p3": "为什么我们总在感情中一再犯同样的错误？为什么我们会被不爱我们的人吸引，却推开那些真正爱我们的人？为什么我们有时会在事业上亲手破坏自己的潜能？",
+      "p4": "童年是我们被戴上第一副面具的时期。“做个乖孩子”“别哭”“要坚强”……这些简单的指令，久而久之成了我们性格的基石。然而这些石头，其实是我们囚禁真实自我的牢笼之墙。",
+      "p5": "在这本书里，我们将把那些墙一面面推倒。这并不容易。直面自己的黑暗有时是痛苦的。但请记住：伤口所在之处，正是光照进来的地方。",
+      "title1": "引言：戴上眼镜之前",
+      "title2": "第一章：面具的崩落"
+    },
+    "firstPages": "开篇几页",
+    "goBack": "返回",
+    "orderAndRead": "立即订购并阅读全文",
+    "orderNow": "立即订购",
+    "readyToFaceTruth": "你准备好面对自己了吗？"
   }
 }

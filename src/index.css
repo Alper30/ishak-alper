@@ -70,3 +70,105 @@
 body {
   @apply bg-zinc-950 text-zinc-50 antialiased;
 }
+
+/* ============================================================
+   Tema & hareket cilası — daha canlı, daha "kaliteli" his
+   (Yalnızca eklenti niteliğinde; mevcut stilleri bozmaz.)
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Metin seçimi rengi */
+::selection {
+  background: rgba(234, 179, 8, 0.30);
+  color: #fff;
+}
+
+/* İnce, markalı kaydırma çubuğu */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(234, 179, 8, 0.45) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(234,179,8,0.55), rgba(202,138,4,0.55));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(253,224,71,0.8), rgba(234,179,8,0.8));
+  background-clip: padding-box;
+}
+
+/* Erişilebilir, zarif odak halkası */
+:focus-visible {
+  outline: 2px solid rgba(234, 179, 8, 0.7);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@layer utilities {
+  /* Altın gradyan başlık */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #FDE047 0%, #EAB308 45%, #CA8A04 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Canlı, yavaşça hareket eden "aurora" arka plan katmanı.
+     Kullanım: <div class="aurora-bg" aria-hidden="true"></div> (relative bir kapsayıcı içinde) */
+  .aurora-bg {
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 38% at 18% 22%, rgba(234,179,8,0.16), transparent 70%),
+      radial-gradient(34% 34% at 82% 18%, rgba(113,63,18,0.22), transparent 70%),
+      radial-gradient(45% 45% at 50% 88%, rgba(202,138,4,0.12), transparent 70%);
+    filter: blur(28px) saturate(120%);
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+  }
+
+  /* Yumuş​ak "yüzen" hareket */
+  .animate-float { animation: float-soft 7s ease-in-out infinite; }
+
+  /* Hafif parıltılı çerçeve geçişi (kartlar için) */
+  .card-glow {
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card-glow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 30px rgba(234,179,8,.18);
+  }
+
+  /* Görünüme girince yumuşak açılım (framer-motion kullanmayan yerler için) */
+  .reveal-on-scroll { animation: reveal-up .8s ease both; }
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0,0,0) scale(1)   rotate(0deg); }
+  50%  { transform: translate3d(2%, -2%, 0) scale(1.08) rotate(4deg); }
+  100% { transform: translate3d(-2%, 2%, 0) scale(1.04) rotate(-3deg); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

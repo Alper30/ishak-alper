@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BookOpen, ShoppingCart, Brain, Star, Users } from 'lucide-react';
+import { BookOpen, ShoppingCart, Brain, Star, Users, Sparkles, ArrowRight } from 'lucide-react';
 import { doc, onSnapshot, updateDoc, increment, setDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import ContentFeed from '../components/ContentFeed';
@@ -86,6 +86,15 @@ export default function Home() {
   const displayContentFeedTitle = (!isTr ? t('home.thoughtsAndAnalysis') : settings.contentFeedTitle) || t('home.thoughtsAndAnalysis');
   const displayContentFeedSubtitle = (!isTr ? t('home.thoughtsSubtitle') : (settings as any).contentFeedSubtitle) || t('home.thoughtsSubtitle');
 
+  // Consulting packages: prefer admin-defined (settings.consultingPackages); fall back to localized defaults.
+  const defaultConsultingKeys = ['mental', 'financial', 'relationships', 'darkPsychology', 'energy', 'vip'];
+  const adminConsulting = Array.isArray((settings as any).consultingPackages)
+    ? (settings as any).consultingPackages.filter((p: any) => p && p.enabled !== false && (p.title || '').toString().trim())
+    : [];
+  const consultingPackages = adminConsulting.length > 0
+    ? adminConsulting.map((p: any, i: number) => ({ id: p.id || `pkg-${i}`, title: p.title || '', desc: p.desc || '', featured: !!p.featured }))
+    : defaultConsultingKeys.map((key) => ({ id: key, title: t(`contact.services.${key}.title`), desc: t(`contact.services.${key}.desc`), featured: key === 'vip' }));
+
   return (
     <div className="flex flex-col min-h-screen">
       <SEO 
@@ -96,6 +105,7 @@ export default function Home() {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden border-b border-brand-500/10 bg-black">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/40 via-black to-black" />
+          <div className="aurora-bg" aria-hidden="true" />
           <img
             src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1920&auto=format&fit=crop"
             alt=""
@@ -196,6 +206,14 @@ export default function Home() {
                 <BookOpen className="mr-3 w-5 h-5 text-brand-400" />
                 {(isTr ? (settings as any).heroCta1 : null) || t('home.reviewBook', 'Arka Kapak Yazısını Oku')}
               </Link>
+              <button
+                type="button"
+                onClick={() => document.getElementById('danismanlik')?.scrollIntoView({ behavior: 'smooth' })}
+                className="inline-flex items-center justify-center px-10 py-5 text-sm sm:text-base tracking-widest uppercase font-semibold text-brand-300 bg-transparent hover:bg-brand-500/10 transition-all duration-300 rounded-full backdrop-blur-md border border-brand-500/40 hover:border-brand-400 hover:shadow-[0_0_30px_rgba(234,179,8,0.25)] active:scale-95 w-full sm:w-auto"
+              >
+                <Brain className="mr-3 w-5 h-5" />
+                {(isTr ? (settings as any).heroCta3 : null) || t('home.getConsulting', 'Danışmanlık Al')}
+              </button>
             </motion.div>
           </div>
         </div>
@@ -245,6 +263,84 @@ export default function Home() {
             <div className="w-12 h-1px bg-brand-500/50"></div>
             <span className="text-brand-400 font-medium tracking-widest uppercase text-sm">{(isTr ? (settings as any).quoteAuthor : null) || 'İshak Alper'}</span>
             <div className="w-12 h-1px bg-brand-500/50"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Consulting Packages Section */}
+      <section id="danismanlik" className="py-28 bg-zinc-950 border-t border-white/5 relative overflow-hidden scroll-mt-24" aria-labelledby="consulting-heading">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/15 via-zinc-950 to-zinc-950 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-brand-500/30 bg-black/40 text-brand-400 text-xs font-semibold tracking-widest uppercase mb-6 backdrop-blur-md">
+              <Sparkles className="w-4 h-4" aria-hidden="true" />
+              <span>{(isTr ? (settings as any).consultancyTitle : null) || t('home.consultingTitle')}</span>
+            </div>
+            <h2 id="consulting-heading" className="text-3xl md:text-5xl font-serif text-white tracking-tight mb-6">
+              {(isTr ? (settings as any).consultancyTitle : null) || t('home.consultingTitle')}
+            </h2>
+            <p className="text-lg text-zinc-400 font-light leading-relaxed">
+              {(isTr ? (settings as any).consultancySubtitle : null) || t('home.consultingSubtitle')}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {consultingPackages.map((pkg: any, i: number) => {
+              const featured = pkg.featured;
+              return (
+                <motion.div
+                  key={pkg.id || i}
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: (i % 3) * 0.08 }}
+                >
+                  <Link
+                    to="/iletisim"
+                    className={`group relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-1.5 ${
+                      featured
+                        ? 'border-brand-500/50 bg-gradient-to-b from-brand-500/10 to-zinc-900/60 hover:border-brand-400 hover:shadow-[0_0_45px_rgba(234,179,8,0.25)]'
+                        : 'border-white/10 bg-zinc-900/50 hover:border-brand-500/40 hover:bg-zinc-900 hover:shadow-[0_0_35px_rgba(0,0,0,0.5)]'
+                    }`}
+                  >
+                    {featured && (
+                      <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-brand-500 text-black text-[10px] font-bold tracking-widest uppercase shadow-lg">
+                        {t('home.new', 'Öne Çıkan')}
+                      </span>
+                    )}
+                    <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl ${featured ? 'bg-brand-500/20 text-brand-300' : 'bg-white/5 text-brand-400'} group-hover:scale-110 transition-transform`}>
+                      {featured ? <Sparkles className="w-6 h-6" /> : <Brain className="w-6 h-6" />}
+                    </div>
+                    <h3 className="text-xl font-serif text-white mb-3 leading-snug">
+                      {pkg.title}
+                    </h3>
+                    <p className="text-sm text-zinc-400 font-light leading-relaxed flex-grow">
+                      {pkg.desc}
+                    </p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-400 group-hover:gap-3 transition-all">
+                      {(isTr ? (settings as any).consultingCtaText : null) || t('home.consultingCta', 'Randevu Talep Et')}
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-14 text-center">
+            <Link
+              to="/iletisim"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 text-sm sm:text-base tracking-widest uppercase font-bold text-black bg-brand-500 hover:bg-brand-400 transition-all duration-300 rounded-full shadow-[0_0_40px_rgba(234,179,8,0.35)] hover:shadow-[0_0_60px_rgba(234,179,8,0.6)] hover:-translate-y-1 active:scale-95"
+            >
+              <Users className="w-5 h-5" />
+              {(isTr ? (settings as any).consultingAllText : null) || t('home.consultingAllPackages', 'Tüm paketleri ve başvuru formunu gör')}
+            </Link>
           </div>
         </div>
       </section>

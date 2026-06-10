@@ -31,7 +31,12 @@
     "thoughtsAndAnalysis": "Pensieri & Analisi",
     "thoughtsSubtitle": "Note brevi e analisi approfondite sul comportamento.",
     "heroTitle": "La Lente Che Mette a Nudo",
-    "heroSubtitle": "Preferisci una bugia o la dolorosa verità?"
+    "heroSubtitle": "Preferisci una bugia o la dolorosa verità?",
+    "getConsulting": "Richiedi consulenza",
+    "consultingTitle": "Consulenza individuale",
+    "consultingSubtitle": "Per chi è pronto ad andare oltre il libro. Programmi di consulenza su misura pensati per spezzare i tuoi schemi mentali, ricostruire le tue relazioni e riprendere il controllo della tua vita.",
+    "consultingCta": "Richiedi un appuntamento",
+    "consultingAllPackages": "Vedi tutti i pacchetti e il modulo"
   },
   "about": {
     "subtitle": "Autore, Influencer e Consulente",
@@ -87,11 +92,42 @@
     "reviewsDesc": "Commenti.",
     "prevReview": "Prec",
     "nextReview": "Suff",
+    "formatsTitle": "Scegli il tuo formato, inizia la resa dei conti",
+    "formatsSubtitle": "Scegli l'esperienza di lettura più adatta a te. Qualunque formato tu scelga, la stessa verità sconvolgente ti aspetta.",
+    "selectThisFormat": "Scegli questo formato",
     "formats": {
-      "fiziki": { "title": "Fisico", "desc": "Libro", "features": ["Libre"], "price": "997 TL" },
-      "pdf": { "title": "PDF", "desc": "Digitale", "features": ["Download"], "price": "495 TL" },
-      "sesli": { "title": "Audio", "desc": "Ascolto", "features": ["Studio"], "price": "1450 TL" },
-      "imzali": { "title": "Firma", "desc": "Autografo", "features": ["Limitato"], "price": "2450 TL" }
+      "fiziki": {
+        "title": "Fisico",
+        "desc": "Libro",
+        "features": [
+          "Libre"
+        ],
+        "price": "997 TL"
+      },
+      "pdf": {
+        "title": "PDF",
+        "desc": "Digitale",
+        "features": [
+          "Download"
+        ],
+        "price": "495 TL"
+      },
+      "sesli": {
+        "title": "Audio",
+        "desc": "Ascolto",
+        "features": [
+          "Studio"
+        ],
+        "price": "1450 TL"
+      },
+      "imzali": {
+        "title": "Firma",
+        "desc": "Autografo",
+        "features": [
+          "Limitato"
+        ],
+        "price": "2450 TL"
+      }
     }
   },
   "blog": {
@@ -106,7 +142,26 @@
     "comment": "Commento",
     "close": "Chiudi",
     "copyLink": "Copia",
-    "postImage": "Immagine"
+    "postImage": "Immagine",
+    "addComment": "Aggiungi un commento...",
+    "backToBlog": "Torna al blog",
+    "errorTitle": "Errore",
+    "guestUser": "Utente ospite",
+    "likes": "mi piace",
+    "likesCount": "{{count}} mi piace",
+    "linkCopied": "Link copiato!",
+    "loadMore": "Mostra altro",
+    "new": "Nuovo",
+    "noComments": "Ancora nessun commento. Scrivi tu il primo!",
+    "now": "Adesso",
+    "postComment": "Pubblica",
+    "postLoadError": "Si è verificato un errore durante il caricamento dell'articolo.",
+    "postNotFound": "Articolo non trovato.",
+    "postNotPublished": "Questo articolo non è pubblicato.",
+    "save": "Salva",
+    "unsave": "Rimuovi dai salvati",
+    "showLess": "Mostra meno",
+    "openFull": "Apri l’articolo"
   },
   "contact": {
     "title": "Contatto",
@@ -131,18 +186,53 @@
       "energy": "Energia"
     },
     "services": {
-      "mental": { "title": "Mentale", "desc": "Libertà" },
-      "financial": { "title": "Finanza", "desc": "Ricchezza" },
-      "relationships": { "title": "Relazioni", "desc": "Legami" },
-      "darkPsychology": { "title": "Oscura", "desc": "Potere" },
-      "energy": { "title": "Energia", "desc": "Focus" }
+      "mental": {
+        "title": "Mentale",
+        "desc": "Libertà"
+      },
+      "financial": {
+        "title": "Finanza",
+        "desc": "Ricchezza"
+      },
+      "relationships": {
+        "title": "Relazioni",
+        "desc": "Legami"
+      },
+      "darkPsychology": {
+        "title": "Oscura",
+        "desc": "Potere"
+      },
+      "energy": {
+        "title": "Energia",
+        "desc": "Focus"
+      },
+      "socialMedia": {
+        "desc": "Strategia di crescita organica su Instagram, YouTube, TikTok e X. Psicologia del pubblico e posizionamento professionale del brand.",
+        "title": "Crescita e strategia sui social media"
+      },
+      "vip": {
+        "desc": "Programma di mentoring individuale e intensivo. Una trasformazione totale in ogni ambito della tua vita.",
+        "title": "Trasformazione VIP e progettazione strategica della vita"
+      }
     },
     "errors": {
       "name": "Richiesto",
       "phone": "Richiesto",
       "email": "Non valido",
       "message": "Richiesto"
-    }
+    },
+    "emailPlaceholder": "esempio@email.com",
+    "followUs": "Seguici",
+    "generalConsultancy": "Consulenza generale",
+    "interestedConsultancy": "Consulenza di tuo interesse",
+    "makeSelection": "Fai una selezione",
+    "messagePlaceholder": "Come possiamo aiutarti?",
+    "namePlaceholder": "Il tuo nome e cognome",
+    "newMessage": "Invia un nuovo messaggio",
+    "phonePlaceholder": "0555 555 55 55",
+    "requestAppointment": "Richiedi un appuntamento",
+    "subtitle": "Una guida professionale per chi vuole scoprire il proprio potenziale, superare i blocchi mentali e dare una nuova direzione alla propria vita.",
+    "successDesc": "La tua richiesta di consulenza ci è arrivata correttamente. Ti contatteremo il prima possibile."
   },
   "checkout": {
     "title": "Pagamento",
@@ -165,7 +255,67 @@
     "orderSuccessMessage": "Ricevuto.",
     "orderErrorTitle": "Errore",
     "orderErrorMessage": "Riprova.",
-    "continueShopping": "Continua"
+    "continueShopping": "Continua",
+    "backCover": "Quarta di copertina",
+    "backCoverQuote": "\"La verità ti coglie nudo. Indossi gli occhiali, non per vedere, ma a volte per nasconderti, a volte per nascondere. Ma se i tuoi occhiali rivelassero tutto ciò che nascondi?\"",
+    "backToHome": "Torna alla home",
+    "bookDetails": {
+      "title": "Gli Occhiali Che Mostrano a Nudo"
+    },
+    "cardHolder": "Nome sulla carta",
+    "cardHolderPlaceholder": "NOME COGNOME",
+    "city": "Città",
+    "cityPlaceholder": "Città",
+    "continue": "Continua",
+    "deliveryAddress": "Indirizzo di consegna",
+    "district": "Distretto",
+    "districtPlaceholder": "Distretto",
+    "email": "E-mail",
+    "emailPlaceholder": "esempio@email.com",
+    "expiryDatePlaceholder": "MM/AA",
+    "free": "Gratuito",
+    "frontCover": "Copertina",
+    "fullAddress": "Indirizzo completo",
+    "fullAddressPlaceholder": "Quartiere, via, numero civico, numero interno...",
+    "fullNamePlaceholder": "Il tuo nome e cognome",
+    "option": "Opzione",
+    "options": {
+      "audio": {
+        "desc": "MP3 di alta qualità, letto dall'autore stesso.",
+        "name": "Audiolibro"
+      },
+      "pdf": {
+        "desc": "Download immediato, compatibile con tutti i dispositivi.",
+        "name": "E-book (PDF)"
+      },
+      "signed": {
+        "desc": "Firmato personalmente, spedizione prioritaria, segnalibro in omaggio.",
+        "name": "Edizione speciale firmata"
+      },
+      "standard": {
+        "desc": "Copertina flessibile, spedizione standard.",
+        "name": "Libro cartaceo (edizione standard)"
+      }
+    },
+    "order": "Ordine",
+    "orderReceived": "Il tuo ordine è stato ricevuto",
+    "orderReceivedDesc": "Il tuo ordine è stato creato con successo. I dettagli verranno inviati al tuo indirizzo e-mail.",
+    "orderSummary": "Riepilogo dell'ordine",
+    "pages": "Pagine",
+    "payment": "Pagamento",
+    "paymentInfo": "Informazioni di pagamento",
+    "phonePlaceholder": "05XX XXX XX XX",
+    "proceedToPayment": "Procedi al pagamento",
+    "securePaymentDesc": "Pagamento sicuro con SSL a 256 bit",
+    "selectFormat": "Formato del libro",
+    "selectedFormatDetail": "Dettaglio del formato selezionato",
+    "shipping": "Spedizione",
+    "step1": {
+      "desc": "Questo non è solo un libro, è un richiamo al risveglio. Stai facendo il primo passo per togliere le maschere che la società ti impone, affrontare la tua realtà e riprendere il controllo della tua vita.",
+      "selectFormat": "Scelta del formato",
+      "title": "Sei pronto a confrontarti con te stesso?"
+    },
+    "total": "Totale"
   },
   "footer": {
     "title": "Footer",
@@ -173,6 +323,37 @@
     "quickLinks": "Links",
     "socialMedia": "Social",
     "rights": "Tutti i diritti.",
-    "adminLogin": "Admin"
+    "adminLogin": "Admin",
+    "allRightsReserved": "Tutti i diritti riservati.",
+    "emailLabel": "Invia un'e-mail"
+  },
+  "newsletter": {
+    "backToPage": "Torna alla pagina",
+    "desc": "Vedere la verità richiede coraggio. Sii il primo ad accedere ai preziosi contenuti e agli scritti esclusivi di İshak Alper.",
+    "emailPlaceholder": "Il tuo indirizzo e-mail",
+    "error": "Si è verificato un errore. Riprova.",
+    "processing": "Elaborazione in corso...",
+    "spamWarning": "Non inviamo spam. Puoi annullare l'iscrizione quando vuoi.",
+    "submit": "Entra",
+    "successDesc": "Benvenuto tra noi. I contenuti esclusivi, le citazioni del libro e le sorprese di İshak Alper arriveranno presto nella tua casella di posta.",
+    "successTitle": "La porta si è aperta!",
+    "title": "La porta dei tesori"
+  },
+  "readPreview": {
+    "ctaDesc": "Questo era solo l'inizio. Se hai letto fin qui e quel disagio ti è familiare, ormai non si torna indietro. Sei pronto a togliere la tua maschera?",
+    "defaultContent": {
+      "p1": "Ognuno ha una storia, ma pochissimi sanno davvero leggere la propria. La maggior parte di noi è impegnata a interpretare i ruoli che ci vengono assegnati in copioni scritti da altri. Il volto che vediamo allo specchio è davvero il nostro, o una maschera plasmata dalla società, dalla famiglia e dai traumi del passato?",
+      "p2": "«Gli Occhiali Che Mostrano a Nudo» è una metafora. Indossando questi occhiali, non vedrai i vestiti delle persone, ma la nudità della loro anima, le paure che nascondono, il loro bisogno di approvazione e i desideri più profondi. Ma soprattutto, guardandoti allo specchio, affronterai la tua stessa nudità.",
+      "p3": "Perché commettiamo continuamente gli stessi errori nelle nostre relazioni? Perché siamo attratti da chi non ci ama e respingiamo chi ci ama davvero? Perché a volte sabotiamo il nostro stesso potenziale sul lavoro?",
+      "p4": "L'infanzia è il periodo in cui ci viene messa la prima maschera. «Fai il bravo bambino», «Non piangere», «Mostrati forte»... Questi semplici comandi diventano col tempo i pilastri della nostra personalità. Ma quelle pietre sono in realtà le mura di una prigione in cui rinchiudiamo la nostra vera essenza.",
+      "p5": "In questo libro abbatteremo quelle mura una a una. Non sarà facile. Affrontare la propria oscurità a volte è doloroso. Ma ricorda: è là dov'è la ferita che entra la luce.",
+      "title1": "Introduzione: prima di mettere gli occhiali",
+      "title2": "Primo capitolo: la caduta delle maschere"
+    },
+    "firstPages": "Prime pagine",
+    "goBack": "Torna indietro",
+    "orderAndRead": "Ordina ora e leggi tutto",
+    "orderNow": "Ordina ora",
+    "readyToFaceTruth": "Sei pronto a confrontarti con te stesso?"
   }
 }

@@ -140,6 +140,43 @@ export default function Book() {
   const displayBookTitle = (isTr ? book?.title : null) || `${t('book.titlePart1')} ${t('book.titlePart2')}`;
   const displayBookDesc = (isTr ? book?.description : null) || t('book.description');
 
+  // Format list: prefer admin-defined formats from Firestore (book.formats);
+  // fall back to the built-in localized defaults if none are set.
+  const iconForType = (type?: string) => {
+    switch (type) {
+      case 'pdf': return FileText;
+      case 'sesli': case 'audio': return Headphones;
+      case 'imzali': case 'signed': return PenTool;
+      case 'fiziki': case 'physical': case 'book': default: return BookIcon;
+    }
+  };
+  const adminFormats = Array.isArray(book?.formats)
+    ? book.formats.filter((f: any) => f && f.enabled !== false && (f.title || '').toString().trim())
+    : [];
+  const displayFormats = adminFormats.length > 0
+    ? adminFormats.map((f: any, i: number) => ({
+        id: f.id || `fmt-${i}`,
+        Icon: iconForType(f.type),
+        title: f.title || '',
+        price: f.price || '',
+        desc: f.desc || '',
+        features: Array.isArray(f.features)
+          ? f.features
+          : (f.features ? String(f.features).split('\n').filter(Boolean) : []),
+        featured: !!f.featured,
+        fileUrl: f.fileUrl || ''
+      }))
+    : Object.values(FORMATS).map((f: any) => ({
+        id: f.id,
+        Icon: f.icon,
+        title: t(f.title),
+        price: f.price,
+        desc: t(f.desc),
+        features: f.features.map((k: string) => t(k)),
+        featured: f.id === 'imzali',
+        fileUrl: ''
+      }));
+
   const promotionalVideos = settings?.promotionalVideos || [
     { title: "Çıplak Gösteren Gözlükler - Genel Bakış", desc: "Kitabın temel felsefesi ve vaatleri üzerine bir inceleme.", url: "https://www.youtube.com/watch?v=LXb3EKWsInQ", poster: "https://images.unsplash.com/photo-1476275466078-4007374efac4?q=80&w=1920&auto=format&fit=crop" },
     { title: "Psikolojik Vaat", desc: "Çıplak gözle görmek ne anlama geliyor?", url: "https://www.youtube.com/watch?v=LXb3EKWsInQ", poster: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop" },
@@ -272,6 +309,74 @@ export default function Book() {
                 />
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Formats Section — revives the previously-unused FORMATS data into a live, dynamic showcase */}
+      <section className="py-24 bg-zinc-950 border-t border-white/5 relative overflow-hidden" aria-labelledby="formats-heading">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/15 via-zinc-950 to-zinc-950 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <h2 id="formats-heading" className="text-3xl md:text-5xl font-serif text-white tracking-tight mb-5">
+              {t('book.formatsTitle', 'Formatını Seç, Yüzleşmeye Başla')}
+            </h2>
+            <p className="text-lg text-zinc-400 font-light">
+              {t('book.formatsSubtitle', 'Sana en uygun okuma deneyimini seç.')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {displayFormats.map((format: any, i: number) => {
+              const Icon = format.Icon;
+              const featured = format.featured;
+              return (
+                <motion.div
+                  key={format.id || i}
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className={`relative flex flex-col rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-1.5 ${
+                    featured
+                      ? 'border-brand-500/50 bg-gradient-to-b from-brand-500/10 to-zinc-900/60 hover:shadow-[0_0_45px_rgba(234,179,8,0.25)]'
+                      : 'border-white/10 bg-zinc-900/50 hover:border-brand-500/40 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)]'
+                  }`}
+                >
+                  {featured && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand-500 text-black text-[10px] font-bold tracking-widest uppercase shadow-lg whitespace-nowrap">
+                      {t('home.new', 'Öne Çıkan')}
+                    </span>
+                  )}
+                  <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl ${featured ? 'bg-brand-500/20 text-brand-300' : 'bg-white/5 text-brand-400'}`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-serif text-white mb-1 leading-snug">{format.title}</h3>
+                  {format.price && <div className="text-2xl font-bold text-brand-400 mb-3">{format.price}</div>}
+                  {format.desc && <p className="text-sm text-zinc-400 font-light leading-relaxed mb-5">{format.desc}</p>}
+                  <ul className="space-y-2 mb-6 flex-grow">
+                    {format.features.map((feat: string, fi: number) => (
+                      <li key={fi} className="flex items-start gap-2 text-sm text-zinc-300">
+                        <Check className="w-4 h-4 text-brand-500 mt-0.5 shrink-0" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/checkout"
+                    state={{ format: format.id }}
+                    className={`mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-bold tracking-wide uppercase transition-all active:scale-95 ${
+                      featured
+                        ? 'bg-brand-500 text-black hover:bg-brand-400 shadow-[0_0_30px_rgba(234,179,8,0.35)]'
+                        : 'bg-zinc-800 text-white hover:bg-zinc-700 border border-white/10 hover:border-brand-500/40'
+                    }`}
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    {t('book.selectThisFormat', 'Bu Formatı Seç')}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

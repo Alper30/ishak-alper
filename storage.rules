@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Firebase Storage güvenlik kuralları
+// Deploy: firebase deploy --only storage
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Herkes okuyabilir (yayınlanan görsel/videolar herkese açık)
+    // Yalnızca yönetici (ishak595@gmail.com) yazabilir/silebilir.
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'ishak595@gmail.com';
+    }
+
+    // Görseller: en fazla 10 MB, sadece resim türleri
+    match /images/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // Videolar: en fazla 200 MB, sadece video türleri
+    match /videos/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.size < 200 * 1024 * 1024
+        && request.resource.contentType.matches('video/.*');
+    }
+
+    // Diğer tüm yollar: okuma serbest, yazma sadece yönetici (≤200 MB)
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && request.resource.size < 200 * 1024 * 1024;
+    }
+  }
+}
